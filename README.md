@@ -1,11 +1,11 @@
 # KushPatel_Project1
 **Instructions to Run the Program:**
-0. Ensure libraries from `requirements.txt` are installed.
-1. Ensure you have Python version 3.12 installed.
-2. Place your Google Gemini API key in api_secrets.py as `gemini_api_key`.
-3. Make sure rapid_jobs2.json is in the same directory as this script.
-4. Run the script using `python GeminiAPI.py`.
-5. The output will be saved as `Marked_Resume.md`.
+1. Ensure libraries from `requirements.txt` are installed.
+2. Ensure you have Python version 3.12 installed.
+3. Place your Google Gemini API key in api_secrets.py as `gemini_api_key`.
+4. Make sure rapid_jobs2.json is in the same directory as this script.
+5. Run the script using `python GeminiAPI.py`.
+6. The output will be saved as `Marked_Resume.md`.
 
 **Why Google Gemini AI?**
 * I chose this google gemini api because I am familiar with it
