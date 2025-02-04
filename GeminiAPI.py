@@ -53,8 +53,7 @@ data = {
     "contents": [{
         "parts": [{"text": f"Remember my Personal Information: {personal_info} \n Remember the Job description: "
                            f"{job_description} \n Now create a resume in markdown format that will be designed from the "
-                           f"my personal information and job description that I provided"
-        }]
+                           f"my personal information and job description that I provided"}]
     }]
 }
 
