@@ -52,8 +52,8 @@ headers = {'content-type': 'application/json'}
 data = {
     "contents": [{
         "parts": [{"text": f"Remember my Personal Information: {personal_info} \n Remember the Job description: "
-                           f"{job_description} \n Now create a resume in markdown format that will be designed from the "
-                           f"my personal information and job description that I provided"}]
+                           f"{job_description} \n Now create a resume in markdown format that will be designed from "
+                           f"my personal information, using keywords from job description that I provided"}]
     }]
 }
 
