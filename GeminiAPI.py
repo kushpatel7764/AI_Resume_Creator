@@ -51,8 +51,9 @@ url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash
 headers = {'content-type': 'application/json'}
 data = {
     "contents": [{
-        "parts": [{"text":
-            f"Remember my Personal Information: {personal_info} \n Remember the Job description: {job_description} \n Now create a resume in markdown format that will be designed from the my personal information and job description that I provided"
+        "parts": [{"text": f"Remember my Personal Information: {personal_info} \n Remember the Job description: "
+                           f"{job_description} \n Now create a resume in markdown format that will be designed from the "
+                           f"my personal information and job description that I provided"
         }]
     }]
 }
