@@ -25,23 +25,21 @@ def get_random_json_object():
 
 #Function to get all json objects
 def get_all_json_objects():
-    json_objects_job1 = [] #Single JSON object is each index
-    json_objects_job2 = [] #Array of JSON objects is in each index
-    json_objects_job2_objs_only = []
+    json_objects = []
     with open('rapid_jobs2.json', 'r') as f:
         for line in f:
             # Read each line in rapid_jobs2.json file as a JSON object
-            json_objects_job2.append(json.loads(line))
-        for obj in json_objects_job2:
-            json_objects_job2_objs_only.append(obj)
+            objs_array =json.loads(line)
+            for obj in objs_array:
+                json_objects.append(obj)
 
     with open('rapid_job1.json', 'r') as f:
         for line in f:
             # Read each line in rapid_jobs2.json file as a JSON object
-            json_objects_job1.append(json.loads(line))
+            json_objects.append(json.loads(line))
     with open('output.txt', 'w') as f:
-        f.write(json.dumps(json_objects_job2_objs_only, indent=4))
-    return json_objects_job1, json_objects_job2_objs_only
+        f.write(json.dumps(json_objects[1400], indent=4))
+    return json_objects
 
 
 #Connect to database

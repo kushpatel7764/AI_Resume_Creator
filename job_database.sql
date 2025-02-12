@@ -28,7 +28,7 @@ CREATE TABLE IF NOT EXISTS jobs (
 );
 
 CREATE TABLE IF NOT EXISTS companies (
-    id VARCHAR(50) PRIMARY KEY,
+    id int AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255),
     company_industry VARCHAR(255),
     company_url TEXT,
