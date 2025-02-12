@@ -37,8 +37,8 @@ def get_all_json_objects():
         for line in f:
             # Read each line in rapid_jobs2.json file as a JSON object
             json_objects.append(json.loads(line))
-    with open('output.txt', 'w') as f:
-        f.write(json.dumps(json_objects[1400], indent=4))
+    #with open('output.txt', 'w') as f:
+    #    f.write(json.dumps(json_objects[1400], indent=4))
     return json_objects
 
 
@@ -53,79 +53,99 @@ def connect_job_database(cursor, conn):
     # Commit changes
     conn.commit()
 
+# Store job_json into job table
+def insert_to_job(conn, cursor, job_info):
+    job_id = job_info.get("id")
 
-# Store job_json into database
-def insert_to_database(cursor, conn, job_info, company):
+    # Check if job_id already exists
+    cursor.execute("SELECT COUNT(*) FROM jobs WHERE id = ?", (job_id,))
+    exists = cursor.fetchone()[0]
+
+    if exists:
+        print(f"Skipping job {job_id}, already exists.")
+        return  # Skip inserting duplicate
+
+    #There are two different date posted in the json files
+    #There is date_posted and datePosted, this just fixes that issue
+    date_posted = job_info.get("date_posted", None)
+    date_posted2 = job_info.get("datePosted", None)
+    date = ""
+    if date_posted is not None:
+        date = date_posted
+    else:
+        date = date_posted2
+
     cursor.execute("""
-        Insert INTO jobs (id, site, job_url, job_url_direct, title, company_id, location, job_type, date_posted, salary_source, interval, min_amount, max_amount, currency, is_remote, job_level, job_function, listing_type, emails, description, employment_type, salary_range, image, provider_name, provider_url) 
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? ,?, ?, ?, ?, ?, ?, ?, ?);
+        Insert INTO jobs (id, site, job_url, job_url_direct, title, company_name, company_industry, company_url, company_url_direct, company_addresses, company_num_employees, company_revenue, company_description, logo_photo_url, banner_photo_url, ceo_name, ceo_photo_url, location, job_type, date_posted, salary_source, interval, min_amount, max_amount, currency, is_remote, job_level, job_function, listing_type, emails, description, employment_type, salary_range, image) 
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? ,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
     """, (job_info.get("id"),
-        job_info.get("site"),
-        job_info.get("job_url"),
-        job_info.get("job_url_direct"),
-        job_info.get("title"),
-        company.get("id"),  # Use company ID as foreign key
-        job_info.get("location"),
-        job_info.get("job_type"),
-        job_info.get("date_posted"),
-        job_info.get("salary_source"),
-        job_info.get("interval"),
-        job_info.get("min_amount"),
-        job_info.get("max_amount"),
-        job_info.get("currency"),
-        job_info.get("is_remote"),
-        job_info.get("job_level"),
-        job_info.get("job_function"),
-        job_info.get("listing_type"),
-        job_info.get("emails"),
-        job_info.get("description"),
-        job_info.get("employment_type"),
-        job_info.get("salary_range"),
-        job_info.get("image"),
-        job_info.get("provider_name"),
-        job_info.get("provider_url"))
+        job_info.get("site", None),
+        job_info.get("job_url", None),
+        job_info.get("job_url_direct", None),
+        job_info.get("title", None),
+        job_info.get("company_name", None),
+        job_info.get("company_industry", None),
+        job_info.get("company_url", None),
+        job_info.get("company_url_direct", None),
+        job_info.get("company_addresses", None),  # Use company ID as foreign key
+        job_info.get("company_num_employees", None),
+        job_info.get("company_revenue", None),
+        job_info.get("company_description", None),
+        job_info.get("logo_photo_url", None),
+        job_info.get("banner_photo_url", None),
+        job_info.get("ceo_name", None),
+        job_info.get("ceo_photo_url", None),
+        job_info.get("location", None),
+        job_info.get("job_type", None),
+        date,
+        job_info.get("salary_source", None),
+        job_info.get("interval", None),
+        job_info.get("min_amount", None),
+        job_info.get("max_amount", None),
+        job_info.get("currency", None),
+        job_info.get("is_remote", None),
+        job_info.get("job_level", None),
+        job_info.get("job_function", None),
+        job_info.get("listing_type", None),
+        job_info.get("emails", None),
+        job_info.get("description", None),
+        job_info.get("employment_type", None),
+        job_info.get("salary_range", None),
+        job_info.get("image", None))
     )
     conn.commit()
 
-    cursor.execute("""
-        Insert INTO companies (id, name, company_industry, company_url, company_url_direct, company_addresses, company_num_employees, company_revenue, company_description, logo_photo_url, banner_photo_url, ceo_name, ceo_photo_url) 
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
-    """, (job_info.get("id"),
-          job_info.get("name"),
-          job_info.get("company_industry"),
-          job_info.get("company_url"),
-          job_info.get("company_url_direct"),
-          company.get("company_addresses"),  # Use company ID as foreign key
-          job_info.get("company_num_employees"),
-          job_info.get("company_revenue"),
-          job_info.get("company_description"),
-          job_info.get("logo_photo_url"),
-          job_info.get("banner_photo_url"),
-          job_info.get("ceo_name"),
-          job_info.get("ceo_photo_url"))
-    )
+# Function to insert job providers
+def insert_to_job_provider(conn, cursor, job_id, providers):
+    for provider in providers:
+        cursor.execute("""
+            INSERT INTO job_providers (job_id, provider_name, provider_url)
+            VALUES (?, ?, ?)
+        """, (job_id, provider.get('jobProvider', None), provider.get('url', None)))
     conn.commit()
+
 
 
 
 def main():
     # Get the API key from the api_secrets file to access Google's Gemini AI model
     key = gemini_api_key
-
     # Using the random_json_object(), get a random job and then extract the job description from the job.
     job_json_random = get_random_json_object()
     job_description = job_json_random["description"]
-
-
 
     # Connect to the SQLite database (or create one if it doesn't exist)
     conn = sqlite3.connect("Jobs_Database.db")
     cursor = conn.cursor()
     #Connect the Jobs_Database.db
     connect_job_database(cursor, conn)
-    #Insert json info in database
-    insert_to_database(cursor, conn, job_json_random, job_json_random["company"])
-
+    all_json_obj = get_all_json_objects()
+    for i, obj in enumerate(all_json_obj):
+        #Insert json info in database
+        insert_to_job(conn, cursor, obj)
+        insert_to_job_provider(conn, cursor, obj['id'], obj.get('jobProviders', []))
+    print("Data successfully inserted!")
+    conn.close()
 
     # Personal information to be included in the resume
     personal_info = ("My name is Kush Patel. I am a computer science major studying at Bridgewater State University (BSU),"
@@ -166,5 +186,5 @@ def main():
     with open(new_file_name, 'w') as f:
         f.write(marked_resume)
 
-#main()
-get_all_json_objects()
+main()
+
