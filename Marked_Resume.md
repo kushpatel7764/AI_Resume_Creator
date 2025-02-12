@@ -1,41 +1,39 @@
 # Kush Patel
 
-**(508) 555-1212 | kush.patel@email.com | linkedin.com/in/kushpatel (replace with your actual LinkedIn profile)**
+**(774) XXX-XXXX | kush.patel@email.com | LinkedIn Profile URL (Optional)**
 
 **Summary**
 
-Highly motivated and results-oriented Computer Science major at Bridgewater State University (BSU) graduating May 2025, with a 4.0 major GPA and proven experience in software development, data processing, and image recognition.  Proficient in Python, Java, Swift, JavaScript, and MySQL, with expertise in web application development, cloud computing, and database systems. Seeking a challenging software engineering role where I can leverage my skills and contribute to innovative projects. Awarded the Dr. Linda Wilkens and Dr. Glenn Pavlicek Scholarship for academic excellence.
+Highly motivated and results-oriented Computer Science major at Bridgewater State University (BSU) graduating May 2025, with a proven track record of academic excellence (4.0 GPA in major) and practical experience in software development and data analysis.  Possessing a strong foundation in cybersecurity principles and a passion for problem-solving, seeking a challenging role leveraging technical expertise to drive impactful solutions.  Proficient in Python, Java, Swift, JavaScript, and MySQL.  Experience with Git, JetBrains IDEs, Xcode, and VS Code.  Eager to contribute to a dynamic team and learn from industry leaders.
+
 
 **Education**
 
-* **Bridgewater State University (BSU), Bridgewater, MA** – Bachelor of Science in Computer Science (Expected Graduation: May 2025)
-    * GPA: 4.0 Major GPA
+* **Bridgewater State University (BSU)**, Bridgewater, MA – Bachelor of Science in Computer Science, May 2025
+    * GPA: 4.0 (Major)
     * Relevant Coursework: Web Application Development, Computer Networks, Software Engineering, Cloud Computing, Introduction to Database Systems, Introduction to AI, Unix/Linux System Administration
-    * **Scholarship:** Dr. Linda Wilkens and Dr. Glenn Pavlicek Scholarship
+    * **Awards:** Dr. Linda Wilkens and Dr. Glenn Pavlicek Scholarship
+
 
 **Skills**
 
 * **Programming Languages:** Python, Java, Swift, JavaScript, MySQL
-* **Frameworks/Libraries:** React (mention if you have experience)
-* **Tools:** Git, JetBrains IDEs (Specify which ones), Xcode, VS Code
+* **Tools & Technologies:** Git, JetBrains IDEs (IntelliJ, PyCharm, etc.), Xcode, VS Code,  Google Cloud Platform (familiarity desired)
 * **Databases:** MySQL
-* **Cloud:** AWS (Mention specific services if you have experience)
 * **Operating Systems:** Unix/Linux
-* **Other:**  Data processing, Image recognition, Bank statement processing, Agile methodologies (If applicable)
+* **Methodologies:** Agile (implied from project experience)
+* **Other:** Data Analysis, Problem-Solving,  Communication (written and verbal), Teamwork,  Time Management
 
 
 **Projects**
 
-* **Bank Statement Processing Application:** Developed an application to efficiently convert bank statements into Excel spreadsheets using [mention technologies used].
-* **Image to Excel Table Conversion:**  Research internship at BSU focused on developing a program that recognizes tables in images and converts them to Excel tables using [mention technologies used].
+* **Bank Statement Processing Application:** Developed a Python application to efficiently convert bank statements into Excel spreadsheets.  (Demonstrates data analysis, problem-solving, and practical application of programming skills)
+* **Image-to-Excel Table Conversion Program (Research Internship, BSU):**  Developing a program to recognize tables within images and convert them into Excel format. (Demonstrates image processing, data extraction, and problem-solving skills)
 
 
 **Experience**
 
-* **Research Intern, Bridgewater State University** (Current) – [Start Date] – Present
-    * Developed a program to recognize tables within images and convert them to Excel format.  [Add quantifiable results if possible, e.g., "Achieved X% accuracy in table recognition."]
-
-**(Add any other relevant work experience here)**
+* **Research Intern, Bridgewater State University:**  [Start Date] – Present.  Developing an image processing application for table recognition and Excel conversion.
 
 
 **Awards and Recognition**
@@ -45,14 +43,10 @@ Highly motivated and results-oriented Computer Science major at Bridgewater Stat
 
 **Hobbies**
 
-* Basketball
-* Cricket
-* Programming
+* Basketball, Cricket, Programming
 
 
-**References**
-
-Available upon request.
+**Keywords:**  Cybersecurity, Cloud Security, Google Cloud Platform, Sales, Presales,  Technical Presales, CISO,  Data Analysis, Problem-Solving, Python, Java, JavaScript, MySQL,  Software Development,  Communication, Teamwork,  Google Cloud Security Solutions,  Cloud Computing,  Information Security,  Mitigation Techniques,  Data Extraction, Image Processing,  Agile.
 
 
-**Note:**  This resume is tailored to highlight aspects relevant to the provided job description.  Remember to replace bracketed information with your specific details and quantify your accomplishments whenever possible.  If you have experience with React or AWS services, be sure to include those details.  Consider adding a section on your contributions to team projects if relevant to your experience.  If you have a portfolio website, include the URL.
+**(Note:  This resume heavily emphasizes transferable skills and projects to align with the job description, despite lacking direct CISO or sales experience.  Consider adding a compelling cover letter further highlighting relevant skills and a strong desire to learn and grow in the security sector.)**

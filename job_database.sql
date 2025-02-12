@@ -1,0 +1,45 @@
+CREATE TABLE IF NOT EXISTS jobs (
+    id VARCHAR(50) PRIMARY KEY,
+    site VARCHAR(255),
+    job_url TEXT,
+    job_url_direct TEXT,
+    title VARCHAR(255),
+    company_id VARCHAR(50),
+    location VARCHAR(255),
+    job_type VARCHAR(50),
+    date_posted DATE,
+    salary_source VARCHAR(50),
+    interval VARCHAR(50),
+    min_amount DECIMAL(10,2),
+    max_amount DECIMAL(10,2),
+    currency VARCHAR(10),
+    is_remote BOOLEAN,
+    job_level VARCHAR(255),
+    job_function VARCHAR(255),
+    listing_type VARCHAR(255),
+    emails TEXT,
+    description TEXT,
+    employment_type VARCHAR(50),
+    salary_range VARCHAR(255),
+    image TEXT,
+    provider_name VARCHAR(255),
+    provider_url TEXT,
+    FOREIGN KEY (company_id) REFERENCES companies(id) ON DELETE SET NULL
+);
+
+CREATE TABLE IF NOT EXISTS companies (
+    id VARCHAR(50) PRIMARY KEY,
+    name VARCHAR(255),
+    company_industry VARCHAR(255),
+    company_url TEXT,
+    company_url_direct TEXT,
+    company_addresses TEXT,
+    company_num_employees VARCHAR(50),
+    company_revenue VARCHAR(50),
+    company_description TEXT,
+    logo_photo_url TEXT,
+    banner_photo_url TEXT,
+    ceo_name VARCHAR(255),
+    ceo_photo_url TEXT
+);
+
