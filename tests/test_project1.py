@@ -1,8 +1,8 @@
 import os
 import sqlite3
 import unittest
-from src.GeminiAPI import initialize_database
-from src.GeminiAPI import get_all_json_objects
+from src.Database import initialize_database
+from src.Database import get_all_json_objects
 
 
 class MyTestCase(unittest.TestCase):
