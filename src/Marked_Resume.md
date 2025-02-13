@@ -1,59 +1,59 @@
 # Kush Patel
-(555) 555-5555 | kush.patel@email.com | LinkedIn Profile URL (Optional)
+
+**(508) 555-1212 | kush.patel@email.com | LinkedIn Profile URL (Optional)**
+
 
 **Summary**
 
-Highly motivated and results-oriented Computer Science graduate (Bridgewater State University, May 2025) with a proven ability to design, develop, and implement innovative software solutions.  Proficient in Python, Java, Swift, JavaScript, and MySQL, with experience in web application development, cloud computing, and AI.  Seeking a challenging Software Developer role where I can leverage my skills and contribute to impactful projects.  Currently developing a bank statement processing application and conducting research on image processing for table recognition and conversion to Excel.  Awarded the Dr. Linda Wilkens and Dr. Glenn Pavlicek Scholarship for academic excellence (4.0 GPA).
+Highly motivated and results-oriented Computer Science student at Bridgewater State University (BSU) graduating May 2025, with a proven track record of academic excellence (4.0 major GPA) and practical experience in software development and research.  Proficient in Python, Java, Swift, JavaScript, and MySQL, with expertise in web application development, computer networks, software engineering, cloud computing, and artificial intelligence. Seeking a challenging role in cybersecurity research where I can leverage my skills in designing, developing, and deploying innovative solutions.
 
 
 **Education**
 
-* **Bridgewater State University (BSU)**, Bridgewater, MA
-    * Bachelor of Science in Computer Science, May 2025 (Expected Graduation)
-    * GPA: 4.0
-    * **Relevant Coursework:** Web Application Development, Computer Networks, Software Engineering, Cloud Computing, Introduction to Database Systems, Introduction to AI, Unix/Linux System Administration
+* **Bridgewater State University (BSU), Bridgewater, MA** – Bachelor of Science in Computer Science, Expected Graduation: May 2025
+    * GPA: 4.0 (Major)
+    * Relevant Coursework: Web Application Development, Computer Networks, Software Engineering, Cloud Computing, Introduction to Database Systems, Introduction to AI, Unix/Linux System Administration
+    * **Awards:** Dr. Linda Wilkens and Dr. Glenn Pavlicek Scholarship
+
 
 **Skills**
 
 * **Programming Languages:** Python, Java, Swift, JavaScript, MySQL
-* **Development Tools:** Git, JetBrains IDEs (e.g., IntelliJ, PyCharm), Xcode, VS Code
-* **Databases:** MySQL
-* **Cloud Computing:** (Mention specific platforms if applicable, e.g., AWS, Azure, GCP)
+* **Development Tools:** Git, JetBrains IDEs (IntelliJ, PyCharm, etc.), Xcode, VS Code
+* **Database Systems:** MySQL
 * **Operating Systems:** Unix/Linux
-* **Other Skills:**  Problem-solving,  Technical Documentation,  Troubleshooting,  Software Debugging,  Agile Methodologies (If applicable),  Image Processing (Mention libraries used if any, e.g., OpenCV)
+* **Cloud Computing:** (Specify cloud platforms used if any, e.g., AWS, Azure, GCP)
+* **Cybersecurity Concepts:** (Mention any specific cybersecurity concepts you've learned, even introductory ones.  This section is crucial for highlighting your interest.)
+* **Image Processing:** (Mention your experience with image processing libraries or techniques used in your research internship)
+* **Data Analysis:** (Mention if you have experience with data analysis using Python libraries like Pandas or NumPy)
 
 
 **Projects**
 
-* **Bank Statement Processing Application:** Developed a Python application that efficiently converts bank statements into Excel spreadsheets. (Highlight key features and technologies used)
-* **Image-to-Excel Table Conversion:**  Research internship at BSU focused on developing a program to recognize and convert tables from images to Excel format. (Highlight key technologies and results achieved)
-
-
-**Awards and Honors**
-
-* Dr. Linda Wilkens and Dr. Glenn Pavlicek Scholarship, Bridgewater State University (Recognition for academic excellence)
+* **Bank Statement Processing Application:** Developed a Python application to efficiently convert bank statements into Excel spreadsheets.  (Highlight key technologies and accomplishments – e.g., automated data extraction, error handling.)
+* **Table Recognition and Conversion Program (Research Internship, BSU):**  Developing a program to recognize tables within images and convert them into Excel tables.  (Highlight technologies used, e.g., OpenCV, Tesseract OCR, etc., and any progress made.)
 
 
 **Experience**
 
-* **Research Intern,** Bridgewater State University, Bridgewater, MA (Dates of Internship)
-    * Developed a program to convert images of tables into Excel tables.
-    * Utilized [Mention specific technologies used, e.g.,  OpenCV, Python libraries].
+* **Research Intern, Bridgewater State University, Bridgewater, MA** (Dates of Internship)
+    * Developed a program to recognize tables in images and convert them to Excel format.  (Quantify accomplishments whenever possible.)
+
+**Awards and Recognition**
+
+* Dr. Linda Wilkens and Dr. Glenn Pavlicek Scholarship, Bridgewater State University
+
+
+**Hobbies**
+
+* Basketball
+* Cricket
+* Programming
 
 
 **Location**
 
-Fairhaven, Massachusetts (Willing to relocate)
+Fairhaven, MA (Previously East Greenwich, RI)
 
 
-**Clearance**
-
-*  Currently do not possess a security clearance, but am willing to obtain one.
-
-
-**References**
-
-Available upon request.
-
-
-**Note:**  This resume omits the "Required Technical Skills: CompTIA Security+ (DoD 8570 Compliance)" and "Security Clearance Level: Active Top Secret with SCI Eligibility" requirements because Kush does not currently possess them.  He should strongly consider pursuing these if he is serious about applying for this specific job at GDIT.  The resume highlights transferable skills and experience to make him a competitive applicant, even without the security clearance.  Consider adding a line expressing willingness to obtain the necessary security clearance.
+**Note:**  Remember to replace the placeholder "(508) 555-1212" and "kush.patel@email.com" with your actual contact information and add a link to your LinkedIn profile if you have one.  Tailor this resume further by adding quantifiable achievements to your projects and experience sections.  The more specific you are about your skills and accomplishments, the better your resume will be.  Also, research specific cybersecurity keywords relevant to the jobs you are applying for and incorporate them appropriately.

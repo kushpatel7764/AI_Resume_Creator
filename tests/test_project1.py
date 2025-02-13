@@ -25,11 +25,10 @@ class MyTestCase(unittest.TestCase):
         os.remove("test_jobs.json")
     def test_database_setup(self):
         """Test that job data is correctly saved to an in-memory SQLite database."""
-
         # Sample test job data to insert into the database
-        test_data = '''{"id": "123", "title": "Engineer", "company_name": "TechCorp", "description": "Develop software."}
-        {"id": "456", "title": "Data Analyst", "company_name": "DataWorks", "description": "Analyze data."}
-        {"id": "789", "title": "Administrator", "company_name": "NetSolutions", "description": "Manage IT systems."}'''
+        test_data = """{"id": "123", "site": "Indeed", "job_url": "https://www.indeed.com/", "description": "Develop software."}
+        {"id": "456", "site": "LinkedIn", "job_url": "https://www.linkedin.com/", "description": "Analyze data."}
+        {"id": "789", "site": "Glassdoor", "job_url": "https://www.glassdoor.com/", "description": "Manage IT systems."}"""
         with open("test_jobs.json", "w") as f:
             f.write(test_data)
 
@@ -42,11 +41,13 @@ class MyTestCase(unittest.TestCase):
 
         self.assertIsNotNone(result, "Test job with id 123 was not saved to the database")
         self.assertEqual(result[0], "123", f"Expected id '123', but got {result[0]}")
-        self.assertEqual(result[1], "Engineer", f"Expected title 'Engineer', but got {result[1]}")
-        self.assertEqual(result[2], "TechCorp", f"Expected company name 'TechCorp', but got {result[2]}")
-        self.assertEqual(result[3], "Develop software.",
+        self.assertEqual(result[1], "Indeed", f"Expected title 'Indeed', but got {result[1]}")
+        self.assertEqual(result[2], "https://www.indeed.com/", f"Expected company name 'https://www.indeed.com/', but got {result[2]}")
+        self.assertEqual(result[30], "Develop software.",
                          f"Expected description 'Develop software.', but got {result[3]}")
-
+        print("Database creation was successful and accurate.")
+        os.remove("test_jobs.json")
+        os.remove("test_jobs.db")
         conn.close()
 
 
