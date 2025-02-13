@@ -9,6 +9,7 @@ from src.api_secrets import gemini_api_key
 
 # Note to self for github yaml command for pytest: python -m pytest tests/*
 
+
 # Function to get a random job listing from the JSON file
 def get_random_json_object():
     with open('../rapid_jobs2.json', 'r') as f:

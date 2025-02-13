@@ -3,6 +3,7 @@ import sqlite3
 
 # TODO: Improve naming, a lot of variables that read something_name actually should be saying something_path
 
+
 # Function to get all json objects
 def get_all_json_objects(filenames):
     json_objects = []
@@ -134,4 +135,3 @@ def initialize_database(database_name, json_files):
 
 
 initialize_database("../Jobs_Database.db", ["../rapid_job1.json", "../rapid_jobs2.json"])
-
