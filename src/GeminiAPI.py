@@ -1,7 +1,8 @@
+import os
 import random
 import json
 import requests
-from api_secrets import gemini_api_key
+from src.api_secrets import gemini_api_key
 import sqlite3
 # Name: Kush Patel
 # Project Description: This program generates a markdown resume by combining a personal description with
@@ -17,10 +18,11 @@ def get_all_json_objects(filenames):
         with open(filename, 'r') as f:
             for line in f:
                 # Read each line in rapid_jobs2.json file as a JSON object
+
                 objs_array_or_obj =json.loads(line)
                 #If objs_array is an actual array then loop through it otherwise
                 #just add it to json_objects' list
-                if isinstance(objs_array_or_obj, list):
+                if type(objs_array_or_obj) is list:
                     for obj in objs_array_or_obj:
                         json_objects.append(obj)
                 else:
@@ -29,13 +31,13 @@ def get_all_json_objects(filenames):
 
 # Function to get a random job listing from the JSON file
 def get_random_json_object():
-    json_objects = get_all_json_objects(['rapid_jobs2.json'])
+    json_objects = get_all_json_objects(["rapid_jobs2.json"])
     # Select a random job object
     random_job = random.choice(json_objects)
     return random_job
 
 #Connect to database
-def connect_job_database(cursor, conn):
+def setup_job_database(cursor, conn):
     # Read the SQL file
     with open("job_database.sql", "r") as file:
         sql_script = file.read()
@@ -125,8 +127,18 @@ def insert_to_job_provider(conn, cursor, job_id, providers):
         """, (job_id, provider.get('jobProvider', None), provider.get('url', None)))
     conn.commit()
 
-
-
+def initialize_database(database_name, json_files):
+    # Connect to the SQLite database (or create one if it doesn't exist)
+    conn = sqlite3.connect(database_name)
+    cursor = conn.cursor()
+    setup_job_database(cursor, conn)
+    all_json_obj = get_all_json_objects(json_files)
+    for obj in all_json_obj:
+        # Insert json info in database
+        insert_to_job(conn, cursor, obj)
+        insert_to_job_provider(conn, cursor, obj['id'], obj.get('jobProviders', []))
+    print("Data successfully inserted!")
+    conn.close()
 
 def main():
     # Get the API key from the api_secrets file to access Google's Gemini AI model
@@ -135,18 +147,7 @@ def main():
     job_json_random = get_random_json_object()
     job_description = job_json_random["description"]
 
-    # Connect to the SQLite database (or create one if it doesn't exist)
-    conn = sqlite3.connect("Jobs_Database.db")
-    cursor = conn.cursor()
-    #Connect the Jobs_Database.db
-    connect_job_database(cursor, conn)
-    all_json_obj = get_all_json_objects(["rapid_job1.json", "rapid_jobs2.json"])
-    for i, obj in enumerate(all_json_obj):
-        #Insert json info in database
-        insert_to_job(conn, cursor, obj)
-        insert_to_job_provider(conn, cursor, obj['id'], obj.get('jobProviders', []))
-    print("Data successfully inserted!")
-    conn.close()
+    initialize_database("Jobs_Database.db", ["rapid_job1.json", "rapid_jobs2.json"])
 
     # Personal information to be included in the resume
     personal_info = ("My name is Kush Patel. I am a computer science major studying at Bridgewater State University (BSU),"
