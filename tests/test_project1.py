@@ -15,7 +15,7 @@ class MyTestCase(unittest.TestCase):
         with open("../test_jobs.json", "w") as f:
             f.write(test_data)
         # Now get json objects from the test file
-        json_objects = get_all_json_objects(['../test_jobs.json'])
+        json_objects = get_all_json_objects(['test_jobs.json'])
 
         self.assertEqual(len(json_objects), 3)
         print("Number of objects is correct.")
@@ -35,7 +35,7 @@ class MyTestCase(unittest.TestCase):
         with open("../test_jobs.json", "w") as f:
             f.write(test_data)
 
-        initialize_database("../test_jobs.db", ["../test_jobs.json"])
+        initialize_database("../test_jobs.db", ["test_jobs.json"])
         conn = sqlite3.connect("../test_jobs.db")
         cursor = conn.cursor()
 
