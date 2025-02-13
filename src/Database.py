@@ -144,4 +144,4 @@ def initialize_database(database_name, json_files):
     conn.close()
 
 
-initialize_database("../Jobs_Database.db", ["../rapid_job1.json", "../rapid_jobs2.json"])
+initialize_database("../Jobs_Database.db", ["rapid_job1.json", "rapid_jobs2.json"])
