@@ -71,10 +71,11 @@ def insert_to_job(conn, cursor, job_info):
         date = date_posted2
 
     cursor.execute("""
-        Insert INTO jobs (id, site, job_url, job_url_direct, title, company_name, company_industry, company_url, company_url_direct,
-         company_addresses, company_num_employees, company_revenue, company_description, logo_photo_url, banner_photo_url, ceo_name, 
-         ceo_photo_url, location, job_type, date_posted, salary_source, interval, min_amount, max_amount, currency, is_remote, 
-         job_level, job_function, listing_type, emails, description, employment_type, salary_range, image) 
+        Insert INTO jobs (id, site, job_url, job_url_direct, title, company_name, company_industry, company_url, 
+        company_url_direct, company_addresses, company_num_employees, company_revenue, company_description, logo_photo_url,
+        banner_photo_url, ceo_name, ceo_photo_url, location, job_type, date_posted, salary_source, interval, min_amount, 
+        max_amount, currency, is_remote, job_level, job_function, listing_type, emails, description, employment_type, 
+        salary_range, image) 
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? ,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
     """, (job_info.get("id"),
         job_info.get("site", None),
@@ -155,9 +156,7 @@ def main():
     job_json_random = get_random_json_object()
     job_description = job_json_random["description"]
 
-
     initialize_database("../Jobs_Database.db", ["../rapid_job1.json", "../rapid_jobs2.json"])
-
 
     # Personal information to be included in the resume
     personal_info = ("My name is Kush Patel. I am a computer science major studying at Bridgewater State University (BSU),"
