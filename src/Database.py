@@ -1,6 +1,6 @@
 import json
 import sqlite3
-
+import os
 # TODO: Improve naming, a lot of variables that read something_name actually should be saying something_path
 
 
@@ -23,8 +23,13 @@ def get_all_json_objects(filenames):
 
 # Connect to database
 def setup_job_database(cursor, conn):
+    # AI generated
+    base_dir = os.path.dirname(os.path.abspath(__file__))  # Get the directory of Database.py
+    sql_file_path = os.path.join(base_dir, "job_database.sql")
+    # AI ends here --------
+
     # Read the SQL file
-    with open("../job_database.sql", "r") as file:
+    with open(sql_file_path, "r") as file:
         sql_script = file.read()
 
     # Execute the SQL script (AI helped find the executescript() function)
