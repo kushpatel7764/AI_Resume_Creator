@@ -79,39 +79,39 @@ def insert_to_job(conn, cursor, job_info):
         salary_range, image)
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? ,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
     """, (job_info.get("id"),
-        job_info.get("site", None),
-        job_info.get("job_url", None),
-        job_info.get("job_url_direct", None),
-        job_info.get("title", None),
-        job_info.get("company_name", None),
-        job_info.get("company_industry", None),
-        job_info.get("company_url", None),
-        job_info.get("company_url_direct", None),
-        job_info.get("company_addresses", None),  # Use company ID as foreign key
-        job_info.get("company_num_employees", None),
-        job_info.get("company_revenue", None),
-        job_info.get("company_description", None),
-        job_info.get("logo_photo_url", None),
-        job_info.get("banner_photo_url", None),
-        job_info.get("ceo_name", None),
-        job_info.get("ceo_photo_url", None),
-        job_info.get("location", None),
-        job_info.get("job_type", None),
-        date,
-        job_info.get("salary_source", None),
-        job_info.get("interval", None),
-        job_info.get("min_amount", None),
-        job_info.get("max_amount", None),
-        job_info.get("currency", None),
-        job_info.get("is_remote", None),
-        job_info.get("job_level", None),
-        job_info.get("job_function", None),
-        job_info.get("listing_type", None),
-        job_info.get("emails", None),
-        job_info.get("description", None),
-        job_info.get("employment_type", None),
-        job_info.get("salary_range", None),
-        job_info.get("image", None))
+          job_info.get("site", None),
+          job_info.get("job_url", None),
+          job_info.get("job_url_direct", None),
+          job_info.get("title", None),
+          job_info.get("company_name", None),
+          job_info.get("company_industry", None),
+          job_info.get("company_url", None),
+          job_info.get("company_url_direct", None),
+          job_info.get("company_addresses", None),  # Use company ID as foreign key
+          job_info.get("company_num_employees", None),
+          job_info.get("company_revenue", None),
+          job_info.get("company_description", None),
+          job_info.get("logo_photo_url", None),
+          job_info.get("banner_photo_url", None),
+          job_info.get("ceo_name", None),
+          job_info.get("ceo_photo_url", None),
+          job_info.get("location", None),
+          job_info.get("job_type", None),
+          date,
+          job_info.get("salary_source", None),
+          job_info.get("interval", None),
+          job_info.get("min_amount", None),
+          job_info.get("max_amount", None),
+          job_info.get("currency", None),
+          job_info.get("is_remote", None),
+          job_info.get("job_level", None),
+          job_info.get("job_function", None),
+          job_info.get("listing_type", None),
+          job_info.get("emails", None),
+          job_info.get("description", None),
+          job_info.get("employment_type", None),
+          job_info.get("salary_range", None),
+          job_info.get("image", None))
     )
     conn.commit()
 
@@ -197,6 +197,7 @@ def main():
     new_file_name = "../Marked_Resume.md"
     with open(new_file_name, 'w') as f:
         f.write(marked_resume)
+
 
 main()
 
