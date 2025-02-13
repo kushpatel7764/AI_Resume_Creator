@@ -10,6 +10,8 @@ import sqlite3
 
 # Note to self for github yaml command for pytest: python -m pytest tests/*
 # TODO: Improve naming, a lot of variables that read something_name actually should be saying something_path
+
+
 # Function to get all json objects
 def get_all_json_objects(filenames):
     json_objects = []
@@ -17,8 +19,7 @@ def get_all_json_objects(filenames):
         with open(filename, 'r') as f:
             for line in f:
                 # Read each line in rapid_jobs2.json file as a JSON object
-
-                objs_array_or_obj =json.loads(line)
+                objs_array_or_obj = json.loads(line)
                 # If objs_array is an actual array then loop through it otherwise just add it to json_objects' list
                 if type(objs_array_or_obj) is list:
                     for obj in objs_array_or_obj:
@@ -71,11 +72,11 @@ def insert_to_job(conn, cursor, job_info):
         date = date_posted2
 
     cursor.execute("""
-        Insert INTO jobs (id, site, job_url, job_url_direct, title, company_name, company_industry, company_url, 
+        Insert INTO jobs (id, site, job_url, job_url_direct, title, company_name, company_industry, company_url,
         company_url_direct, company_addresses, company_num_employees, company_revenue, company_description, logo_photo_url,
-        banner_photo_url, ceo_name, ceo_photo_url, location, job_type, date_posted, salary_source, interval, min_amount, 
-        max_amount, currency, is_remote, job_level, job_function, listing_type, emails, description, employment_type, 
-        salary_range, image) 
+        banner_photo_url, ceo_name, ceo_photo_url, location, job_type, date_posted, salary_source, interval, min_amount,
+        max_amount, currency, is_remote, job_level, job_function, listing_type, emails, description, employment_type,
+        salary_range, image)
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? ,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
     """, (job_info.get("id"),
         job_info.get("site", None),
@@ -170,9 +171,9 @@ def main():
                      "developing a bank statement processing application that efficiently converts bank statements into Excel"
                      " spreadsheets. With a positive attitude and a relentless motivation to learn, I'm eager to take on new "
                      "challenges and expand my expertise. Additionally, along with my current project, I am also doing a "
-                     "research internship at Bridgewater State University in which I am developing a program that can recognize"
-                     " a table in an image and convert it to an excel table. Some tools that I know are Git, JetBrain IDEs, "
-                     "Xcode, and Vscode. My hobbies are playing basketball, cricket, and programing.")
+                     "research internship at Bridgewater State University in which I am developing a program that can "
+                     "recognize a table in an image and convert it to an excel table. Some tools that I know are Git, "
+                     "JetBrain IDEs, Xcode, and Vscode. My hobbies are playing basketball, cricket, and programing.")
 
     # Prepare the API request payload for Google's Gemini AI model
     url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key={key}"
