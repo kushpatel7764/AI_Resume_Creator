@@ -19,8 +19,7 @@ def get_all_json_objects(filenames):
                 # Read each line in rapid_jobs2.json file as a JSON object
 
                 objs_array_or_obj =json.loads(line)
-                #If objs_array is an actual array then loop through it otherwise
-                #just add it to json_objects' list
+                # If objs_array is an actual array then loop through it otherwise just add it to json_objects' list
                 if type(objs_array_or_obj) is list:
                     for obj in objs_array_or_obj:
                         json_objects.append(obj)
@@ -28,12 +27,14 @@ def get_all_json_objects(filenames):
                     json_objects.append(objs_array_or_obj)
     return json_objects
 
+
 # Function to get a random job listing from the JSON file
 def get_random_json_object():
     json_objects = get_all_json_objects(["../rapid_jobs2.json"])
     # Select a random job object
     random_job = random.choice(json_objects)
     return random_job
+
 
 # Connect to database
 def setup_job_database(cursor, conn):
@@ -45,6 +46,8 @@ def setup_job_database(cursor, conn):
     cursor.executescript(sql_script)
     # Commit changes
     conn.commit()
+
+
 # Insert data into the job table
 def insert_to_job(conn, cursor, job_info):
     job_id = job_info.get("id")
@@ -68,7 +71,10 @@ def insert_to_job(conn, cursor, job_info):
         date = date_posted2
 
     cursor.execute("""
-        Insert INTO jobs (id, site, job_url, job_url_direct, title, company_name, company_industry, company_url, company_url_direct, company_addresses, company_num_employees, company_revenue, company_description, logo_photo_url, banner_photo_url, ceo_name, ceo_photo_url, location, job_type, date_posted, salary_source, interval, min_amount, max_amount, currency, is_remote, job_level, job_function, listing_type, emails, description, employment_type, salary_range, image) 
+        Insert INTO jobs (id, site, job_url, job_url_direct, title, company_name, company_industry, company_url, company_url_direct,
+         company_addresses, company_num_employees, company_revenue, company_description, logo_photo_url, banner_photo_url, ceo_name, 
+         ceo_photo_url, location, job_type, date_posted, salary_source, interval, min_amount, max_amount, currency, is_remote, 
+         job_level, job_function, listing_type, emails, description, employment_type, salary_range, image) 
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? ,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
     """, (job_info.get("id"),
         job_info.get("site", None),
@@ -107,6 +113,7 @@ def insert_to_job(conn, cursor, job_info):
     )
     conn.commit()
 
+
 # Function to insert into job providers table
 def insert_to_job_provider(conn, cursor, job_id, providers):
     for provider in providers:
@@ -125,6 +132,7 @@ def insert_to_job_provider(conn, cursor, job_id, providers):
         """, (job_id, provider.get('jobProvider', None), provider.get('url', None)))
     conn.commit()
 
+
 # Function creates the entire database and places jobs info from json files in the database as well.
 def initialize_database(database_name, json_files):
     # Connect to the SQLite database (or create one if it doesn't exist)
@@ -139,6 +147,7 @@ def initialize_database(database_name, json_files):
     print("Data successfully inserted!")
     conn.close()
 
+
 def main():
     # Get the API key from the api_secrets file to access Google's Gemini AI model
     key = gemini_api_key
@@ -146,7 +155,9 @@ def main():
     job_json_random = get_random_json_object()
     job_description = job_json_random["description"]
 
+
     initialize_database("../Jobs_Database.db", ["../rapid_job1.json", "../rapid_jobs2.json"])
+
 
     # Personal information to be included in the resume
     personal_info = ("My name is Kush Patel. I am a computer science major studying at Bridgewater State University (BSU),"
