@@ -12,7 +12,11 @@ class MyTestCase(unittest.TestCase):
         test_data = """{"id": "123", "title": "Engineer", "company_name": "TechCorp", "description": "Develop software."}
         {"id": "456", "title": "Data Analyst", "company_name": "DataWorks", "description": "Analyze data."}
         {"id": "789", "title": "Administrator", "company_name": "NetSolutions", "description": "Manage IT systems."}"""
-        with open("../test_jobs.json", "w") as f:
+        # AI gen start here ------------------
+        setup_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))  # Moves up one level
+        sql_file_path = os.path.join(setup_dir, "test_jobs.json")
+        # AI ends ----------------------------
+        with open(sql_file_path, "w") as f:
             f.write(test_data)
         # Now get json objects from the test file
         json_objects = get_all_json_objects(['test_jobs.json'])
@@ -24,15 +28,18 @@ class MyTestCase(unittest.TestCase):
         self.assertEqual(json_objects[2]["company_name"], "NetSolutions")
         print("First, Middle, and Last values are correct.")
 
-        os.remove("../test_jobs.json")
+        os.remove(sql_file_path)
 
     def test_database_setup(self):
-        """Test that job data is correctly saved to an in-memory SQLite database."""
         # Sample test job data to insert into the database
         test_data = """{"id": "123", "site": "Indeed", "job_url": "www.indeed.com", "description": "Develop software."}
         {"id": "456", "site": "LinkedIn", "job_url": "https://www.linkedin.com/", "description": "Analyze data."}
         {"id": "789", "site": "Glassdoor", "job_url": "https://www.glassdoor.com/", "description": "Manage IT systems."}"""
-        with open("../test_jobs.json", "w") as f:
+        # AI gen start here ------------------
+        setup_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))  # Moves up one level
+        sql_file_path = os.path.join(setup_dir, "test_jobs.json")
+        # AI ends ----------------------------
+        with open(sql_file_path, "w") as f:
             f.write(test_data)
 
         initialize_database("../test_jobs.db", ["test_jobs.json"])
@@ -49,7 +56,7 @@ class MyTestCase(unittest.TestCase):
         self.assertEqual(result[30], "Develop software.",
                          f"Expected description 'Develop software.', but got {result[3]}")
         print("Database creation was successful and accurate.")
-        os.remove("../test_jobs.json")
+        os.remove(sql_file_path)
         os.remove("../test_jobs.db")
         conn.close()
 
