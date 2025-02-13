@@ -23,11 +23,10 @@ def get_all_json_objects(filenames):
 
 # Connect to database
 def setup_job_database(cursor, conn):
-    # AI generated
-    base_dir = os.path.dirname(os.path.abspath(__file__))  # Get the directory of Database.py
-    sql_file_path = os.path.join(base_dir, "job_database.sql")
-    # AI ends here --------
-
+    # AI gen start here ------------------
+    setup_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))  # Moves up one level
+    sql_file_path = os.path.join(setup_dir, "job_database.sql")
+    # AI ends ----------------------------
     # Read the SQL file
     with open(sql_file_path, "r") as file:
         sql_script = file.read()
