@@ -6,9 +6,15 @@ import os
 
 # Function to get all json objects
 def get_all_json_objects(filenames):
+    # AI gen start here ------------------
+    setup_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))  # Moves up one level
+    # AI ends ----------------------------
     json_objects = []
     for filename in filenames:
-        with open(filename, 'r') as f:
+        # AI gen start here ------------------
+        sql_file_path = os.path.join(setup_dir, filename)
+        # AI ends ----------------------------
+        with open(sql_file_path, 'r') as f:
             for line in f:
                 # Read each line in rapid_jobs2.json file as a JSON object
                 objs_array_or_obj = json.loads(line)
