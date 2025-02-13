@@ -1,43 +1,37 @@
 # Kush Patel
-
-**(508) 555-1212 | kush.patel@email.com | LinkedIn Profile URL (Optional)**
-
+(508) 555-1212 | kpatel@email.com | LinkedIn Profile URL (Optional) | GitHub Profile URL (Optional)
 
 **Summary**
 
-Highly motivated and results-oriented Computer Science student at Bridgewater State University (BSU) graduating May 2025, with a proven track record of academic excellence (4.0 major GPA) and practical experience in software development and research.  Proficient in Python, Java, Swift, JavaScript, and MySQL, with expertise in web application development, computer networks, software engineering, cloud computing, and artificial intelligence. Seeking a challenging role in cybersecurity research where I can leverage my skills in designing, developing, and deploying innovative solutions.
-
+Highly motivated and results-oriented Computer Science major at Bridgewater State University (BSU) graduating May 2025, with a proven track record of academic excellence (4.0 major GPA) and practical experience in software development.  Proficient in Python, Java, Swift, JavaScript, and MySQL, with experience building full-stack applications and leveraging cloud technologies. Seeking a Lead Software Engineer role where I can leverage my skills and passion for innovation to solve complex business problems and contribute to a collaborative team environment.  Experience includes developing a bank statement processing application and conducting research in image processing and data extraction.
 
 **Education**
 
-* **Bridgewater State University (BSU), Bridgewater, MA** – Bachelor of Science in Computer Science, Expected Graduation: May 2025
-    * GPA: 4.0 (Major)
+* **Bridgewater State University (BSU), Bridgewater, MA** - Bachelor of Science in Computer Science (May 2025)
+    * GPA: 4.0 Major GPA
     * Relevant Coursework: Web Application Development, Computer Networks, Software Engineering, Cloud Computing, Introduction to Database Systems, Introduction to AI, Unix/Linux System Administration
-    * **Awards:** Dr. Linda Wilkens and Dr. Glenn Pavlicek Scholarship
-
+    * Awarded Dr. Linda Wilkens and Dr. Glenn Pavlicek Scholarship
 
 **Skills**
 
-* **Programming Languages:** Python, Java, Swift, JavaScript, MySQL
-* **Development Tools:** Git, JetBrains IDEs (IntelliJ, PyCharm, etc.), Xcode, VS Code
-* **Database Systems:** MySQL
-* **Operating Systems:** Unix/Linux
-* **Cloud Computing:** (Specify cloud platforms used if any, e.g., AWS, Azure, GCP)
-* **Cybersecurity Concepts:** (Mention any specific cybersecurity concepts you've learned, even introductory ones.  This section is crucial for highlighting your interest.)
-* **Image Processing:** (Mention your experience with image processing libraries or techniques used in your research internship)
-* **Data Analysis:** (Mention if you have experience with data analysis using Python libraries like Pandas or NumPy)
-
+* **Programming Languages:** Python, Java, Swift, JavaScript, SQL (MySQL)
+* **Cloud Computing:** AWS (Experience level should be specified if more than basic familiarity)
+* **Databases:** MySQL, Open Source RDBMS (Mention specific ones if applicable, e.g., PostgreSQL, MariaDB)  NoSQL (Mention specific ones if applicable, e.g., MongoDB, Cassandra)
+* **Frameworks:**  (List any relevant open-source frameworks used)
+* **Tools:** Git, JetBrains IDEs (Specify which ones, e.g., IntelliJ, PyCharm), Xcode, VS Code, Docker, Kubernetes (If applicable)
+* **Methodologies:** Agile (Specify experience level if more than basic)
+* **Other:**  HTML/CSS, TypeScript (if proficient),  Microservices architecture (if experience),  Data Extraction, Image Processing
 
 **Projects**
 
-* **Bank Statement Processing Application:** Developed a Python application to efficiently convert bank statements into Excel spreadsheets.  (Highlight key technologies and accomplishments – e.g., automated data extraction, error handling.)
-* **Table Recognition and Conversion Program (Research Internship, BSU):**  Developing a program to recognize tables within images and convert them into Excel tables.  (Highlight technologies used, e.g., OpenCV, Tesseract OCR, etc., and any progress made.)
+* **Bank Statement Processing Application:** Developed a Python application to efficiently convert bank statements into Excel spreadsheets.  (Highlight key technologies and accomplishments)
+* **Image to Excel Table Conversion:**  Research internship project at BSU focusing on developing a program to recognize tables in images and convert them to Excel tables. (Highlight key technologies and accomplishments)
 
 
 **Experience**
 
-* **Research Intern, Bridgewater State University, Bridgewater, MA** (Dates of Internship)
-    * Developed a program to recognize tables in images and convert them to Excel format.  (Quantify accomplishments whenever possible.)
+* **Research Internship, Bridgewater State University (Current)**  (Describe responsibilities and accomplishments in more detail, quantifying results whenever possible)
+
 
 **Awards and Recognition**
 
@@ -46,14 +40,12 @@ Highly motivated and results-oriented Computer Science student at Bridgewater St
 
 **Hobbies**
 
-* Basketball
-* Cricket
-* Programming
+Basketball, Cricket, Programming
 
 
 **Location**
 
-Fairhaven, MA (Previously East Greenwich, RI)
+Fairhaven, MA (Willing to relocate)
 
 
-**Note:**  Remember to replace the placeholder "(508) 555-1212" and "kush.patel@email.com" with your actual contact information and add a link to your LinkedIn profile if you have one.  Tailor this resume further by adding quantifiable achievements to your projects and experience sections.  The more specific you are about your skills and accomplishments, the better your resume will be.  Also, research specific cybersecurity keywords relevant to the jobs you are applying for and incorporate them appropriately.
+**Note:**  This resume is tailored to the provided job description.  Remember to quantify your accomplishments whenever possible (e.g., "Improved application performance by 20%").  Also,  replace placeholder information like "(Specify which ones)" and  "(Highlight key technologies and accomplishments)" with specific details from your projects and experiences.  Finally, adjust the emphasis on certain skills and experiences to better match the specific requirements and preferences of the job description in each application.  If you have any relevant work experience (even internships), be sure to include them with quantifiable accomplishments. The current version lacks work experience beyond the research internship, which might be a limiting factor.
