@@ -2,6 +2,7 @@ import random
 import json
 import requests
 from src.api_secrets import gemini_api_key
+
 # Name: Kush Patel
 # Project Description: This program generates a markdown resume by combining a personal description with
 #                      a randomly selected job description from rapid_jobs2.json. The markdown resume is
@@ -12,7 +13,7 @@ from src.api_secrets import gemini_api_key
 
 # Function to get a random job listing from the JSON file
 def get_random_json_object():
-    with open('../rapid_jobs2.json', 'r') as f:
+    with open("../rapid_jobs2.json", "r") as f:
         json_objects = []
         for line in f:
             # Read each line in rapid_jobs2.json file as a JSON object
@@ -32,30 +33,38 @@ def main():
     job_description = job_json_random["description"]
 
     # Personal information to be included in the resume
-    personal_info = ("My name is Kush Patel. I am a computer science major studying at Bridgewater State University (BSU),"
-                     " I am driven by a desire to innovate and problem solve. I am graduating from the BSU on May, 2025. "
-                     "Some important courses I have completed at BSU are Web Application Development, Computer Networks, "
-                     "Software Engineering, Cloud Computing, Introduction Database systems, Introduction to A.I., and "
-                     "Unix/Linux System Admin.I was awarded Dr. Linda Wilkens and Dr. Glenn Pavlicek Scholarship at BSU in "
-                     "recognition of my academic achievements such as a 4.0 major GPA. I am from East Greenwich, Road Island "
-                     "but I currently live in Fairhaven, Massachusetts. Some programing languages that I am proficient at are"
-                     " Python, Java, Swift, and JavaScript. I also MySQL from my database system course. Currently, I am "
-                     "developing a bank statement processing application that efficiently converts bank statements into Excel"
-                     " spreadsheets. With a positive attitude and a relentless motivation to learn, I'm eager to take on new "
-                     "challenges and expand my expertise. Additionally, along with my current project, I am also doing a "
-                     "research internship at Bridgewater State University in which I am developing a program that can "
-                     "recognize a table in an image and convert it to an excel table. Some tools that I know are Git, "
-                     "JetBrain IDEs, Xcode, and Vscode. My hobbies are playing basketball, cricket, and programing.")
+    personal_info = (
+        "My name is Kush Patel. I am a computer science major studying at Bridgewater State University (BSU),"
+        " I am driven by a desire to innovate and problem solve. I am graduating from the BSU on May, 2025. "
+        "Some important courses I have completed at BSU are Web Application Development, Computer Networks, "
+        "Software Engineering, Cloud Computing, Introduction Database systems, Introduction to A.I., and "
+        "Unix/Linux System Admin.I was awarded Dr. Linda Wilkens and Dr. Glenn Pavlicek Scholarship at BSU in "
+        "recognition of my academic achievements such as a 4.0 major GPA. I am from East Greenwich, Road Island "
+        "but I currently live in Fairhaven, Massachusetts. Some programing languages that I am proficient at are"
+        " Python, Java, Swift, and JavaScript. I also MySQL from my database system course. Currently, I am "
+        "developing a bank statement processing application that efficiently converts bank statements into Excel"
+        " spreadsheets. With a positive attitude and a relentless motivation to learn, I'm eager to take on new "
+        "challenges and expand my expertise. Additionally, along with my current project, I am also doing a "
+        "research internship at Bridgewater State University in which I am developing a program that can "
+        "recognize a table in an image and convert it to an excel table. Some tools that I know are Git, "
+        "JetBrain IDEs, Xcode, and Vscode. My hobbies are playing basketball, cricket, and programing."
+    )
 
     # Prepare the API request payload for Google's Gemini AI model
     url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key={key}"
-    headers = {'content-type': 'application/json'}
+    headers = {"content-type": "application/json"}
     data = {
-        "contents": [{
-            "parts": [{"text": f"Remember my Personal Information: {personal_info} \n Remember the Job description: "
-                               f"{job_description} \n Now create a resume in markdown format that will be designed from "
-                               f"my personal information, using keywords from job description that I provided"}]
-        }]
+        "contents": [
+            {
+                "parts": [
+                    {
+                        "text": f"Remember my Personal Information: {personal_info} \n Remember the Job description: "
+                        f"{job_description} \n Now create a resume in markdown format that will be designed from "
+                        f"my personal information, using keywords from job description that I provided"
+                    }
+                ]
+            }
+        ]
     }
 
     # Send a post request to the Gemini API
@@ -67,7 +76,7 @@ def main():
 
     # Save the generated resume to a markdown file
     new_file_name = "../Marked_Resume.md"
-    with open(new_file_name, 'w') as f:
+    with open(new_file_name, "w") as f:
         f.write(marked_resume)
 
 

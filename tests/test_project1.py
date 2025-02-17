@@ -13,13 +13,15 @@ class MyTestCase(unittest.TestCase):
         {"id": "456", "title": "Data Analyst", "company_name": "DataWorks", "description": "Analyze data."}
         {"id": "789", "title": "Administrator", "company_name": "NetSolutions", "description": "Manage IT systems."}"""
         # AI gen start here ------------------
-        setup_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))  # Moves up one level
+        setup_dir = os.path.dirname(
+            os.path.dirname(os.path.abspath(__file__))
+        )  # Moves up one level
         sql_file_path = os.path.join(setup_dir, "test_jobs.json")
         # AI ends ----------------------------
         with open(sql_file_path, "w") as f:
             f.write(test_data)
         # Now get json objects from the test file
-        json_objects = get_all_json_objects(['test_jobs.json'])
+        json_objects = get_all_json_objects(["test_jobs.json"])
 
         self.assertEqual(len(json_objects), 3)
         print("Number of objects is correct.")
@@ -36,7 +38,9 @@ class MyTestCase(unittest.TestCase):
         {"id": "456", "site": "LinkedIn", "job_url": "https://www.linkedin.com/", "description": "Analyze data."}
         {"id": "789", "site": "Glassdoor", "job_url": "https://www.glassdoor.com/", "description": "Manage IT systems."}"""
         # AI gen start here ------------------
-        setup_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))  # Moves up one level
+        setup_dir = os.path.dirname(
+            os.path.dirname(os.path.abspath(__file__))
+        )  # Moves up one level
         sql_file_path = os.path.join(setup_dir, "test_jobs.json")
         # AI ends ----------------------------
         with open(sql_file_path, "w") as f:
@@ -49,17 +53,28 @@ class MyTestCase(unittest.TestCase):
         cursor.execute("SELECT * FROM jobs WHERE id = '123'")
         result = cursor.fetchone()
 
-        self.assertIsNotNone(result, "Test job with id 123 was not saved to the database")
+        self.assertIsNotNone(
+            result, "Test job with id 123 was not saved to the database"
+        )
         self.assertEqual(result[0], "123", f"Expected id '123', but got {result[0]}")
-        self.assertEqual(result[1], "Indeed", f"Expected title 'Indeed', but got {result[1]}")
-        self.assertEqual(result[2], "www.indeed.com", f"Expected company name 'www.indeed.com', but got {result[2]}")
-        self.assertEqual(result[30], "Develop software.",
-                         f"Expected description 'Develop software.', but got {result[3]}")
+        self.assertEqual(
+            result[1], "Indeed", f"Expected title 'Indeed', but got {result[1]}"
+        )
+        self.assertEqual(
+            result[2],
+            "www.indeed.com",
+            f"Expected company name 'www.indeed.com', but got {result[2]}",
+        )
+        self.assertEqual(
+            result[30],
+            "Develop software.",
+            f"Expected description 'Develop software.', but got {result[3]}",
+        )
         print("Database creation was successful and accurate.")
         os.remove(sql_file_path)
         os.remove("../test_jobs.db")
         conn.close()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()
