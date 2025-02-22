@@ -1,23 +1,20 @@
 import json
 import sqlite3
 import os
-
 # TODO: Improve naming, a lot of variables that read something_name actually should be saying something_path
 
 
 # Function to get all json objects
 def get_all_json_objects(filenames):
     # AI gen start here ------------------
-    setup_dir = os.path.dirname(
-        os.path.dirname(os.path.abspath(__file__))
-    )  # Moves up one level
+    setup_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))  # Moves up one level
     # AI ends ----------------------------
     json_objects = []
     for filename in filenames:
         # AI gen start here ------------------
         sql_file_path = os.path.join(setup_dir, filename)
         # AI ends ----------------------------
-        with open(sql_file_path, "r") as f:
+        with open(sql_file_path, 'r') as f:
             for line in f:
                 # Read each line in rapid_jobs2.json file as a JSON object
                 objs_array_or_obj = json.loads(line)
@@ -33,9 +30,7 @@ def get_all_json_objects(filenames):
 # Connect to database
 def setup_job_database(cursor, conn):
     # AI gen start here ------------------
-    setup_dir = os.path.dirname(
-        os.path.dirname(os.path.abspath(__file__))
-    )  # Moves up one level
+    setup_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))  # Moves up one level
     sql_file_path = os.path.join(setup_dir, "job_database.sql")
     # AI ends ----------------------------
     # Read the SQL file
@@ -70,51 +65,47 @@ def insert_to_job(conn, cursor, job_info):
     else:
         date = date_posted2
 
-    cursor.execute(
-        """
+    cursor.execute("""
         Insert INTO jobs (id, site, job_url, job_url_direct, title, company_name, company_industry, company_url,
         company_url_direct, company_addresses, company_num_employees, company_revenue, company_description, logo_photo_url,
         banner_photo_url, ceo_name, ceo_photo_url, location, job_type, date_posted, salary_source, interval, min_amount,
         max_amount, currency, is_remote, job_level, job_function, listing_type, emails, description, employment_type,
         salary_range, image)
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? ,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
-    """,
-        (
-            job_info.get("id"),
-            job_info.get("site", None),
-            job_info.get("job_url", None),
-            job_info.get("job_url_direct", None),
-            job_info.get("title", None),
-            job_info.get("company_name", None),
-            job_info.get("company_industry", None),
-            job_info.get("company_url", None),
-            job_info.get("company_url_direct", None),
-            job_info.get("company_addresses", None),  # Use company ID as foreign key
-            job_info.get("company_num_employees", None),
-            job_info.get("company_revenue", None),
-            job_info.get("company_description", None),
-            job_info.get("logo_photo_url", None),
-            job_info.get("banner_photo_url", None),
-            job_info.get("ceo_name", None),
-            job_info.get("ceo_photo_url", None),
-            job_info.get("location", None),
-            job_info.get("job_type", None),
-            date,
-            job_info.get("salary_source", None),
-            job_info.get("interval", None),
-            job_info.get("min_amount", None),
-            job_info.get("max_amount", None),
-            job_info.get("currency", None),
-            job_info.get("is_remote", None),
-            job_info.get("job_level", None),
-            job_info.get("job_function", None),
-            job_info.get("listing_type", None),
-            job_info.get("emails", None),
-            job_info.get("description", None),
-            job_info.get("employment_type", None),
-            job_info.get("salary_range", None),
-            job_info.get("image", None),
-        ),
+    """, (job_info.get("id"),
+          job_info.get("site", None),
+          job_info.get("job_url", None),
+          job_info.get("job_url_direct", None),
+          job_info.get("title", None),
+          job_info.get("company_name", None),
+          job_info.get("company_industry", None),
+          job_info.get("company_url", None),
+          job_info.get("company_url_direct", None),
+          job_info.get("company_addresses", None),  # Use company ID as foreign key
+          job_info.get("company_num_employees", None),
+          job_info.get("company_revenue", None),
+          job_info.get("company_description", None),
+          job_info.get("logo_photo_url", None),
+          job_info.get("banner_photo_url", None),
+          job_info.get("ceo_name", None),
+          job_info.get("ceo_photo_url", None),
+          job_info.get("location", None),
+          job_info.get("job_type", None),
+          date,
+          job_info.get("salary_source", None),
+          job_info.get("interval", None),
+          job_info.get("min_amount", None),
+          job_info.get("max_amount", None),
+          job_info.get("currency", None),
+          job_info.get("is_remote", None),
+          job_info.get("job_level", None),
+          job_info.get("job_function", None),
+          job_info.get("listing_type", None),
+          job_info.get("emails", None),
+          job_info.get("description", None),
+          job_info.get("employment_type", None),
+          job_info.get("salary_range", None),
+          job_info.get("image", None))
     )
     conn.commit()
 
@@ -125,24 +116,16 @@ def insert_to_job_provider(conn, cursor, job_id, providers):
         provider_name = provider.get("jobProvider")
 
         # Check if job_id and provider_name already exist
-        cursor.execute(
-            "SELECT COUNT(*) FROM job_providers WHERE job_id = ? AND provider_name = ?",
-            (job_id, provider_name),
-        )
+        cursor.execute("SELECT COUNT(*) FROM job_providers WHERE job_id = ? AND provider_name = ?", (job_id, provider_name))
         exists = cursor.fetchone()[0]
 
         if exists:
-            print(
-                f"Skipping job {job_id} from provider {provider_name}, already exists."
-            )
+            print(f"Skipping job {job_id} from provider {provider_name}, already exists.")
             return  # Skip inserting duplicat
-        cursor.execute(
-            """
+        cursor.execute("""
             INSERT INTO job_providers (job_id, provider_name, provider_url)
             VALUES (?, ?, ?)
-        """,
-            (job_id, provider.get("jobProvider", None), provider.get("url", None)),
-        )
+        """, (job_id, provider.get('jobProvider', None), provider.get('url', None)))
     conn.commit()
 
 
@@ -156,7 +139,7 @@ def initialize_database(database_name, json_files):
     for obj in all_json_obj:
         # Insert json info in database
         insert_to_job(conn, cursor, obj)
-        insert_to_job_provider(conn, cursor, obj["id"], obj.get("jobProviders", []))
+        insert_to_job_provider(conn, cursor, obj['id'], obj.get('jobProviders', []))
     print("Data successfully inserted!")
     conn.close()
 

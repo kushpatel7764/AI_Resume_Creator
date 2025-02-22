@@ -42,4 +42,3 @@ CREATE TABLE IF NOT EXISTS job_providers (
     provider_url TEXT,
     FOREIGN KEY (job_id) REFERENCES jobs(id) ON DELETE CASCADE
 );
-
