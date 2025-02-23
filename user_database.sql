@@ -5,8 +5,6 @@ CREATE TABLE IF NOT EXISTS user_profiles (
     phone TEXT NOT NULL,
     github TEXT,
     linkedin TEXT,
-    projects TEXT,
-    classes TEXT,
     other TEXT
 );
 
