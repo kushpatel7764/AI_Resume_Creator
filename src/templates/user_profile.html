@@ -1,0 +1,36 @@
+{% extends "index.html" %}
+
+{% block title %}User Profile{% endblock %}
+
+{% block content %}
+<h2>User Profile</h2>
+<form method="POST">
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name" required>
+
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" required>
+
+    <label for="phone">Phone:</label>
+    <input type="text" id="phone" name="phone" required>
+
+    <label for="github">GitHub:</label>
+    <input type="url" id="github" name="github">
+
+    <label for="linkedin">LinkedIn:</label>
+    <input type="url" id="linkedin" name="linkedin">
+
+    <label for="projects">Projects:</label>
+    <textarea id="projects" name="projects"></textarea>
+    <small class="input-hint">Separate projects with a comma ( , )</small>
+
+    <label for="classes">Classes:</label>
+    <textarea id="classes" name="classes"></textarea>
+    <small class="input-hint">Separate classes with a comma ( , )</small>
+
+    <label for="other">Other Information:</label>
+    <textarea id="other" name="other"></textarea>
+
+    <button type="submit">Save Profile</button>
+</form>
+{% endblock %}
