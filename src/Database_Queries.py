@@ -1,5 +1,6 @@
 import sqlite3
 
+
 def get_jobs(db):
     conn = sqlite3.connect(db)
     cursor = conn.cursor()

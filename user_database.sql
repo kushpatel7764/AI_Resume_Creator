@@ -21,3 +21,5 @@ CREATE TABLE IF NOT EXISTS classes (
     name TEXT,
     FOREIGN KEY (user_id) REFERENCES user_profiles(id) ON DELETE CASCADE
 );
+
+DELETE FROM classes where user_id = 1;

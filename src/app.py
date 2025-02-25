@@ -1,5 +1,6 @@
 import os
 import Database_Queries
+import Database
 from flask import Flask, render_template, request, jsonify
 app = Flask(__name__)
 
@@ -21,8 +22,24 @@ def job_detail(job_id):
     job = Database_Queries.get_job_by_id(db_path, job_id)
     return render_template("job_details.html", job=job)
 
-@app.route('/user_profile')
-def profile():
+@app.route('/profile_page')
+def profile_page():
+    return render_template("user_profile.html")
+
+@app.route('/save_profile', methods=['POST'])
+def save_profile():
+    name = request.form['name']
+    email = request.form['email']
+    phone = request.form['phone']
+    github = request.form.get('github', '')
+    linkedin = request.form.get('linkedin', '')
+    projects = request.form.get('projects', '')
+    classes = request.form.get('classes', '')
+    other = request.form.get('other', '')
+
+    user_info = [name, email, phone, github, linkedin, projects, classes, other]
+    Database.initialize_database(db_path, None, user_profile=user_info)
+
     return render_template("user_profile.html")
 
 if __name__ == '__main__':

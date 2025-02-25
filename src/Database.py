@@ -1,6 +1,10 @@
 import json
 import sqlite3
 import os
+from curses.ascii import isspace
+from os.path import isdir
+
+import src.Utility
 # TODO: Improve naming, a lot of variables that read something_name actually should be saying something_path
 
 
@@ -28,10 +32,10 @@ def get_all_json_objects(filenames):
 
 
 # Connect to database
-def setup_job_database(cursor, conn):
+def setup_database_with_sql_file(cursor, conn, filename):
     # AI gen start here ------------------
     setup_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))  # Moves up one level
-    sql_file_path = os.path.join(setup_dir, "job_database.sql")
+    sql_file_path = os.path.join(setup_dir, filename)
     # AI ends ----------------------------
     # Read the SQL file
     with open(sql_file_path, "r") as file:
@@ -41,6 +45,7 @@ def setup_job_database(cursor, conn):
     cursor.executescript(sql_script)
     # Commit changes
     conn.commit()
+
 
 
 # Insert data into the job table
@@ -121,7 +126,7 @@ def insert_to_job_provider(conn, cursor, job_id, providers):
 
         if exists:
             print(f"Skipping job {job_id} from provider {provider_name}, already exists.")
-            return  # Skip inserting duplicat
+            return  # Skip inserting duplicate
         cursor.execute("""
             INSERT INTO job_providers (job_id, provider_name, provider_url)
             VALUES (?, ?, ?)
@@ -129,19 +134,64 @@ def insert_to_job_provider(conn, cursor, job_id, providers):
     conn.commit()
 
 
+# user_profile is an array the container all the information for the user_profile table. It can contain nulls.
+# At each index of the array there should be information for a field of the database respectively.
+def insert_to_user_profile(conn, cursor, user_profile):
+    name = user_profile[0]
+    email = user_profile[1]
+    phone = user_profile[2]
+    github = user_profile[3]
+    linkedin = user_profile[4]
+    projects = user_profile[5]
+    classes = user_profile[6]
+    other = user_profile[7]
+
+    array_of_projects = src.Utility.string_to_array(projects)
+    array_of_classes = src.Utility.string_to_array(classes)
+
+    cursor.execute('''INSERT OR IGNORE INTO user_profiles(name, email, phone, github, linkedin, other)
+                          VALUES (?, ?, ?, ?, ?, ?)''',
+                   (name, email, phone, github, linkedin, other))
+    _user_id = cursor.lastrowid
+
+    #TODO: Make sure user_id is never zero.
+
+    for project in array_of_projects:
+        #If just space not need to add to database
+        if project.strip() != "":
+            cursor.execute('''INSERT OR IGNORE INTO projects(user_id, description)
+                                      VALUES (?, ?)''',
+                           (_user_id, project))
+
+    for _class in array_of_classes:
+        if _class.strip() != "":
+            cursor.execute('''INSERT OR IGNORE INTO classes(user_id, name)
+                                              VALUES (?, ?)''',
+                           (_user_id, _class))
+
+    conn.commit()
+
 # Function creates the entire database and places jobs info from json files in the database as well.
-def initialize_database(database_name, json_files):
+def initialize_database(database_path, json_files=None, user_profile=None):
     # Connect to the SQLite database (or create one if it doesn't exist)
-    conn = sqlite3.connect(database_name)
+    conn = sqlite3.connect(database_path)
     cursor = conn.cursor()
-    setup_job_database(cursor, conn)
-    all_json_obj = get_all_json_objects(json_files)
-    for obj in all_json_obj:
-        # Insert json info in database
-        insert_to_job(conn, cursor, obj)
-        insert_to_job_provider(conn, cursor, obj['id'], obj.get('jobProviders', []))
-    print("Data successfully inserted!")
+    if json_files is not None:
+        # First setup jobs and job_providers tables
+        setup_database_with_sql_file(cursor, conn, "job_database.sql")
+        all_json_obj = get_all_json_objects(json_files)
+        for obj in all_json_obj:
+            # Insert json info in database
+            insert_to_job(conn, cursor, obj)
+            insert_to_job_provider(conn, cursor, obj['id'], obj.get('jobProviders', []))
+        print("Data successfully inserted!")
+    if user_profile is not None:
+        # Second setup user_profile, projects, and classes table
+        setup_database_with_sql_file(cursor, conn, "user_database.sql")
+        insert_to_user_profile(conn, cursor, user_profile)
     conn.close()
 
 
-initialize_database("../Jobs_Database.db", ["rapid_job1.json", "rapid_jobs2.json"])
+
+
+#initialize_database("../Jobs_Database.db", ["rapid_job1.json", "rapid_jobs2.json"])

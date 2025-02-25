@@ -36,7 +36,7 @@ CREATE TABLE IF NOT EXISTS jobs (
 );
 
 CREATE TABLE IF NOT EXISTS job_providers (
-    id SERIAL PRIMARY KEY,
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
     job_id VARCHAR(50),
     provider_name VARCHAR(255),
     provider_url TEXT,
