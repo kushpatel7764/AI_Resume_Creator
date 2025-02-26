@@ -1,4 +1,11 @@
 # KushPatel_Project1
+This project uses Gemini A.I. model to generate a resume in Markdown format. To create the resume, the A.I. model is  
+provided with a job description and a personal description. A WebUI has been added to this project for easier user 
+interactions. To view the website, navigate to the src directory of this project and run python app.py. While the script
+is running, open your browser and go to http://127.0.0.1:5000. The website has two tabs: Available Jobs and Profile. In 
+the Available Jobs tab, users can browse job listings. In the Profile tab, users to save information that can help their
+employability. 
+
 **Instructions to Run the Program:**
 1. Ensure libraries from `requirements.txt` are installed.
 2. Ensure you have Python version 3.12 installed.
@@ -10,6 +17,18 @@
 8. One the script is running, open your browser and go to: http://127.0.0.1:5000.
 9. In the Available Jobs tab, user can browse job listings.
 10. In the Profile tab, users can save their information.
+
+**Test Functions**
+* test_get_all_json_objects: Tests whether job data is correctly read from a JSON file.
+* test_database_setup: Tests whether job data from a JSON file is successfully inserted into an SQLite database.
+* test_job_details: Tests whether the function get_job_by_id function correctly retrieves 
+the specified fields from the database. This ensures that a more complete data is displayed for user selected job item.
+* test_user_input_request: Tests that /save_profile  correctly receives the input data as typed by the user. If all user 
+input received from request.form is accurate, it can then be passed to the insert_user_profile_data function. This 
+function will store all user input in the same SQLite database as the job data.
+* test_save_profile: Tests that user input is correctly inserted into the SQLite database by insert_user_profile_data 
+function.
+
 
 **Why Google Gemini AI?**
 * I chose this google gemini api because I am familiar with it
