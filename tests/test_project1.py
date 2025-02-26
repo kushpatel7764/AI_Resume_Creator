@@ -91,8 +91,8 @@ class TestJobFunctionality(unittest.TestCase):
         cursor.execute('''
             INSERT INTO jobs (id, title, site, location, description, salary_range, max_amount, min_amount, interval)
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-        ''',("2", "Data Analyst", "LinkedIn", "San Francisco, CA", "Analyze datasets", "$60k-$90k", 90000, 60000,
-                        "yearly"))
+        ''', ("2", "Data Analyst", "LinkedIn", "San Francisco, CA", "Analyze datasets", "$60k-$90k", 90000, 60000,
+        "yearly"))
         conn.commit()
 
         job_id = "2"
@@ -123,7 +123,6 @@ class TestJobFunctionality(unittest.TestCase):
 
 
 class SaveProfileTestCases(unittest.TestCase):
-
 
     def test_user_input_request(self):
         with app.test_client() as client:
@@ -195,6 +194,7 @@ class SaveProfileTestCases(unittest.TestCase):
         self.assertEqual(classes[0][2], "Class1", "First class should be 'Class1'")
         conn.close()
         os.remove("../test_job.db")
+
 
 if __name__ == "__main__":
     unittest.main()
