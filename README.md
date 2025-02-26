@@ -6,6 +6,10 @@
 4. Make sure rapid_jobs2.json is in the same directory as this script.
 5. Run the script using `python GeminiAPI.py`.
 6. The output will be saved as `Marked_Resume.md`.
+7. To view job listings, run the following command inside the src directory: `python app.py`
+8. One the script is running, open your browser and go to: http://127.0.0.1:5000.
+9. In the Available Jobs tab, user can browse job listings.
+10. In the Profile tab, users can save their information.
 
 **Why Google Gemini AI?**
 * I chose this google gemini api because I am familiar with it
