@@ -1,8 +1,6 @@
 import json
 import sqlite3
 import os
-from curses.ascii import isspace
-from os.path import isdir
 
 import src.Utility
 # TODO: Improve naming, a lot of variables that read something_name actually should be saying something_path
@@ -153,10 +151,10 @@ def insert_to_user_profile(conn, cursor, user_profile):
                    (name, email, phone, github, linkedin, other))
     _user_id = cursor.lastrowid
 
-    #TODO: Make sure user_id is never zero.
+    # TODO: Make sure user_id is never zero.
 
     for project in array_of_projects:
-        #If just space not need to add to database
+        # If just space not need to add to database
         if project.strip() != "":
             cursor.execute('''INSERT OR IGNORE INTO projects(user_id, description)
                                       VALUES (?, ?)''',
@@ -221,5 +219,3 @@ def insert_user_profile_data(database_path, user_profile):
 
     print("User profile data successfully inserted!")
     conn.close()
-
-#initialize_database("../Jobs_Database.db", ["rapid_job1.json", "rapid_jobs2.json"])

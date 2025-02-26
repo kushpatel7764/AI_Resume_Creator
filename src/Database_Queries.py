@@ -28,7 +28,8 @@ def get_job_by_id(db, job_id):
     # AI used here
     conn = sqlite3.connect(db)
     cursor = conn.cursor()
-    cursor.execute("SELECT id, title, site, location, description, salary_range, max_amount, min_amount, interval FROM jobs WHERE id = ?", (job_id,))
+    cursor.execute("SELECT id, title, site, location, description, salary_range, max_amount, min_amount, "
+                   "interval FROM jobs WHERE id = ?", (job_id,))
     job = cursor.fetchone()
     conn.close()
 

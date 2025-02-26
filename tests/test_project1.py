@@ -8,6 +8,7 @@ from src.Database import get_all_json_objects
 from src.Database_Queries import get_job_by_id
 from src.app import app
 
+
 class TestJobFunctionality(unittest.TestCase):
 
     def test_get_all_json_objects(self):
@@ -80,7 +81,7 @@ class TestJobFunctionality(unittest.TestCase):
 
     def test_job_details(self):
         # Create an in-memory SQLite database
-        conn = sqlite3.connect("../temp_data.db") #Learned from AI how to make an in memory database
+        conn = sqlite3.connect("../temp_data.db")  # Learned from AI how to make an in memory database
         cursor = conn.cursor()
 
         # Create the jobs table
@@ -90,9 +91,8 @@ class TestJobFunctionality(unittest.TestCase):
         cursor.execute('''
             INSERT INTO jobs (id, title, site, location, description, salary_range, max_amount, min_amount, interval)
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-        ''',
-            ("2", "Data Analyst", "LinkedIn", "San Francisco, CA", "Analyze datasets", "$60k-$90k", 90000, 60000,
-             "yearly"))
+        ''',("2", "Data Analyst", "LinkedIn", "San Francisco, CA", "Analyze datasets", "$60k-$90k", 90000, 60000,
+                        "yearly"))
         conn.commit()
 
         job_id = "2"
@@ -100,7 +100,7 @@ class TestJobFunctionality(unittest.TestCase):
 
         self.assertIsNotNone(job, "Job details should not be None")
         self.assertEqual(job['id'], job_id, "Job ID should match the requested ID")
-        self.assertIn('title', job, "Job title should be present") #AI helped find assertIn
+        self.assertIn('title', job, "Job title should be present")  # AI helped find assertIn
         self.assertIn('salary_range', job, "Salary range should be present")
         self.assertIn('description', job, "Job description should be present")
         self.assertIn('site', job, "Job site should be present")
@@ -108,7 +108,7 @@ class TestJobFunctionality(unittest.TestCase):
         self.assertIn('min_amount', job, "Job min_amount should be present")
         self.assertIn('max_amount', job, "Job max_amount should be present")
         self.assertIn('interval', job, "interval should be present")
-        self.assertEqual(job["title"], "Data Analyst","Job title should match the requested title")
+        self.assertEqual(job["title"], "Data Analyst", "Job title should match the requested title")
         self.assertEqual(job["description"], "Analyze datasets", "Job description should match the requested description")
         self.assertEqual(job['site'], "LinkedIn", "Job site should match the requested site")
         self.assertEqual(job['location'], "San Francisco, CA", "Job location should match the requested location")
@@ -122,8 +122,8 @@ class TestJobFunctionality(unittest.TestCase):
         os.remove("../temp_data.db")
 
 
-
 class SaveProfileTestCases(unittest.TestCase):
+
 
     def test_user_input_request(self):
         with app.test_client() as client:
@@ -184,7 +184,7 @@ class SaveProfileTestCases(unittest.TestCase):
         cursor.execute("SELECT * FROM projects WHERE user_id = ?", (user[0],))
         projects = cursor.fetchall()
         self.assertEqual(len(projects), 2, "Two projects should be inserted")
-        #projects[0] first row then [2] means third colum
+        # projects[0] first row then [2] means third colum
         self.assertEqual(projects[0][2], 'Project1', "First project should be 'Project1'")
         self.assertEqual(projects[1][2], 'Project2', "Second project should be 'Project2'")
 
