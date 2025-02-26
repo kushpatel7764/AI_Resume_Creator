@@ -1,12 +1,14 @@
 import os
 import sqlite3
 import unittest
-from src.Database import initialize_database
+from src.Database import insert_job_data
+from src.Database import insert_user_profile_data
+from src.Database import setup_database_with_sql_file
 from src.Database import get_all_json_objects
 from src.Database_Queries import get_job_by_id
+from src.app import app
 
-
-class MyTestCase(unittest.TestCase):
+class TestJobFunctionality(unittest.TestCase):
 
     def test_get_all_json_objects(self):
         # Testing json data is AI generated.
@@ -47,7 +49,7 @@ class MyTestCase(unittest.TestCase):
         with open(sql_file_path, "w") as f:
             f.write(test_data)
 
-        initialize_database("../test_jobs.db", ["test_jobs.json"])
+        insert_job_data("../test_jobs.db", ["test_jobs.json"])
         conn = sqlite3.connect("../test_jobs.db")
         cursor = conn.cursor()
 
@@ -77,8 +79,24 @@ class MyTestCase(unittest.TestCase):
         conn.close()
 
     def test_job_details(self):
-        job_id = '993d586bad78d40a'
-        job = get_job_by_id("../Jobs_Database.db", job_id)
+        # Create an in-memory SQLite database
+        conn = sqlite3.connect("../temp_data.db") #Learned from AI how to make an in memory database
+        cursor = conn.cursor()
+
+        # Create the jobs table
+        setup_database_with_sql_file(cursor, conn, "job_database.sql")
+
+        # Insert sample data
+        cursor.execute('''
+            INSERT INTO jobs (id, title, site, location, description, salary_range, max_amount, min_amount, interval)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+        ''',
+            ("2", "Data Analyst", "LinkedIn", "San Francisco, CA", "Analyze datasets", "$60k-$90k", 90000, 60000,
+             "yearly"))
+        conn.commit()
+
+        job_id = "2"
+        job = get_job_by_id("../temp_data.db", job_id)
 
         self.assertIsNotNone(job, "Job details should not be None")
         self.assertEqual(job['id'], job_id, "Job ID should match the requested ID")
@@ -90,82 +108,50 @@ class MyTestCase(unittest.TestCase):
         self.assertIn('min_amount', job, "Job min_amount should be present")
         self.assertIn('max_amount', job, "Job max_amount should be present")
         self.assertIn('interval', job, "interval should be present")
-        self.assertEqual(job['title'], "Hybrid - Software Development Specialist 4 (PN 20036298)",
-                         "Job title should match the requested title")
-        self.assertEqual(job['description'], """**What will you do?**
+        self.assertEqual(job["title"], "Data Analyst","Job title should match the requested title")
+        self.assertEqual(job["description"], "Analyze datasets", "Job description should match the requested description")
+        self.assertEqual(job['site'], "LinkedIn", "Job site should match the requested site")
+        self.assertEqual(job['location'], "San Francisco, CA", "Job location should match the requested location")
+        self.assertEqual(job['min_amount'], 60000, "Job min_amount should match the requested min_amount")
+        self.assertEqual(job['max_amount'], 90000, "Job max_amount should match the requested max_amount")
+        self.assertEqual(job['salary_range'], "$60k-$90k", "Salary range should be present")
+        self.assertEqual(job['interval'], "yearly", "interval should be match the given interval")
+
+        print("All the expected field were retrieved correctly.")
+
+        os.remove("../temp_data.db")
 
 
-* Collaborates with IT Architecture staff, Chief Information Officer, and IT Managers to design innovative Azure container applications (ACA) using logic apps, APIs, microservice architecture, and MudBlazor in C# solutions aligning with the agency's requirements.
-* Contributes to the analysis of the solution design business case and authors portions of the solution business case.
-* Leads and facilitates discussions with the development team, product owners, and business SMEs on the best approach to implementing designs.
-* Leads design reviews, writes, and reviews departmental code and/or configuration.
-* Conducts detailed alternative analyses and determine end-user requirements.
-* Identifies root causes for incidents and issues, offering solutions to prevent future defects.
-* Provides post-production support for applications, including error handling, logging, load balancing, failover, and additional tasks.
-* Mentors development staff on standards, best practices, leadership, and excellence in development.
 
-**Why Work for the State of Ohio**
-At the State of Ohio, we take care of the team that cares for Ohioans. We provide a variety of quality, competitive benefits to eligible full-time and part-time employees\*. For a list of all the State of Ohio Benefits, visit our Total Rewards website! Our benefits package includes:
+class SaveProfileTestCases(unittest.TestCase):
 
+    def test_user_input_request(self):
+        with app.test_client() as client:
+            app.config['TESTING'] = True  # Set to True during testing
+            user_input = {
+                'name': 'Kush Patel',
+                'email': 'kushpatelrp1234@gmail.com',
+                'phone': '0123456789',
+                'github': 'github.com',
+                'linkedin': '',
+                'projects': 'project1, project2',
+                'classes': 'class1, ',
+                'other': 'I am smart.'
+            }
 
-* Medical Coverage
-* Free Dental, Vision and Basic Life Insurance premiums after completion of eligibility period
-* Paid time off, including vacation, personal, sick leave and 11 paid holidays per year
-* Childbirth, Adoption, and Foster Care leave
-* Education and Development Opportunities (Employee Development Funds, Public Service Loan Forgiveness, and more)
-* Public Retirement Systems (such as OPERS, STRS, SERS, and HPRS) & Optional Deferred Compensation (Ohio Deferred Compensation)
+            response = client.post("/save_profile", data=user_input)
+            server_response = response.get_json()
+            self.assertEqual(server_response["name"], user_input['name'])
+            self.assertEqual(server_response["email"], user_input['email'])
+            self.assertEqual(server_response["phone"], user_input['phone'])
+            self.assertEqual(server_response["github"], user_input['github'])
+            self.assertEqual(server_response["linkedin"], user_input['linkedin'])
+            self.assertEqual(server_response["projects"], user_input['projects'])
+            self.assertEqual(server_response["classes"], user_input['classes'])
+            self.assertEqual(server_response["other"], user_input['other'])
+            self.assertEqual(server_response["message"], "All fields saved successfully.")
 
-
-* Benefits eligibility is dependent on a number of factors. The Agency Contact listed above will be able to provide specific benefits information for this position.
-
-**Qualifications**
-60 mos. combined work experience in any combination of the following: providing solutions design, developing project plans with project manager or recommending approach through defining tasks and/or leading meetings relating to programs for computer applications including 12 mos. work experience with Azure.  
-
-  
-
-* Or completion of associate core program in computer science or information systems **AND** 42 mos. combined work experience in any combination of the following: providing solutions design, developing project plans with project manager or recommending approach through defining tasks and/or leading meetings relating to programs for computer applications including 12 mos. work experience with Azure.
-
-  
-
-* Or completion of undergraduate core program in computer science or information systems **AND** 36 mos. combined work experience in any combination of the following: providing solutions design, developing project plans with project manager or recommending approach through defining tasks and/or leading meetings relating to programs for computer applications including 12 mos. work experience with Azure.
-
-  
-
-* Or equivalent of minimum class qualifications for employment noted above.
-
-  
-
-**Job Skills:** Software Development/Implementation
-**Technical Skills:** Information Technology, Technical Documentation
-
-
-**Professional Skills:** Collaboration, Growth Mindset, Managing Meetings, Developing Others, Continuous Improvement
-
-
-**Primary Technology:** Microsoft Azure (12 mos. experience required)
-
-
-*To request a reasonable accommodation due to disability, please contact ADA Coordinator Tamara Hairston at 614-466-2508 or by email at**EEO-DiversityAffairs@dodd.ohio.gov**.*
-
-**Supplemental Information*** Current Department of Developmental Disabilities OCSEA employees shall receive first consideration pursuant to Article 17 of the collective bargaining agreement.
-* Hourly wage will be paid at step 1, unless otherwise specified by collective bargaining agreement or rules outlined in the ORC/OAC.
-* The final candidate selected for the position will be required to undergo a criminal background check. Rule 5123-2-02, “Background Investigations for Employment,” outlines disqualifying offenses that will preclude an applicant from being employed by the Department of Developmental Disabilities.
-* No additional materials will be accepted after the closing date; in addition, you must clearly demonstrate how you meet minimum qualifications on your civil service application. Attachments to your civil service application are only supplemental and may not be considered.
-* **Applicants selected to move forward in the hiring process will be contacted to schedule a mandatory in-person written assessment at our central office location.**
-
-**ADA Statement**
-Ohio is a Disability Inclusion State and strives to be a model employer of individuals with disabilities. The State of Ohio is committed to providing access and inclusion and reasonable accommodation in its services, activities, programs and employment opportunities in accordance with the Americans with Disabilities Act (ADA) and other applicable laws.
-
-**Drug-Free Workplace**
-The State of Ohio is a drug-free workplace which prohibits the use of marijuana (recreational marijuana/non-medical cannabis). Please note, this position may be subject to additional restrictions pursuant to the State of Ohio Drug-Free Workplace Policy (HR-39), and as outlined in the posting.""", "Job description should match the requested description")
-        self.assertEqual(job['site'], "indeed", "Job site should match the requested site")
-        self.assertEqual(job['location'], "Columbus, OH, US", "Job location should match the requested location")
-        self.assertEqual(job['min_amount'], 42, "Job min_amount should match the requested min_amount")
-        self.assertEqual(job['max_amount'], 62, "Job max_amount should match the requested max_amount")
-        self.assertEqual(job['salary_range'], None, "Salary range should be present")
-        self.assertEqual(job['interval'], "hourly", "interval should be match the given interval")
-
-    def test_user_profile(self):
+    def test_save_profile(self):
         user_profile = [
             'Shiv Patel',  # name
             'shivpatelrp123@gmail.com',  # email
@@ -176,7 +162,8 @@ The State of Ohio is a drug-free workplace which prohibits the use of marijuana 
             'Class1, ',  # classes
             'Other info'  # other
         ]
-        initialize_database("../test_job.db", user_profile=user_profile)
+        # This is the function that is being tested.
+        insert_user_profile_data("../test_job.db", user_profile=user_profile)
 
         # Connect to the temp database to verify the insertion
         conn = sqlite3.connect("../test_job.db")
@@ -208,7 +195,6 @@ The State of Ohio is a drug-free workplace which prohibits the use of marijuana 
         self.assertEqual(classes[0][2], "Class1", "First class should be 'Class1'")
         conn.close()
         os.remove("../test_job.db")
-
 
 if __name__ == "__main__":
     unittest.main()

@@ -1,6 +1,6 @@
 import os
-import Database_Queries
-import Database
+import src.Database_Queries
+import src.Database
 from flask import Flask, render_template, request, jsonify
 app = Flask(__name__)
 
@@ -14,12 +14,12 @@ def index():
 
 @app.route('/job_list')
 def job_list():
-    jobs = Database_Queries.get_jobs(db_path)
+    jobs = src.Database_Queries.get_jobs(db_path)
     return render_template("jobs.html", jobs=jobs)
 
 @app.route('/job_details/<string:job_id>')
 def job_detail(job_id):
-    job = Database_Queries.get_job_by_id(db_path, job_id)
+    job = src.Database_Queries.get_job_by_id(db_path, job_id)
     return render_template("job_details.html", job=job)
 
 @app.route('/profile_page')
@@ -38,9 +38,20 @@ def save_profile():
     other = request.form.get('other', '')
 
     user_info = [name, email, phone, github, linkedin, projects, classes, other]
-    Database.initialize_database(db_path, None, user_profile=user_info)
+    # TODO: The if statement is a temp fix
+    # Only insert to the database if not in testing mode
+    if not app.config['TESTING']:
+        src.Database.insert_user_profile_data(db_path, user_info)
 
-    return render_template("user_profile.html")
+    return jsonify({"name": f"{name}",
+                    "email": f"{email}",
+                    "phone": f"{phone}",
+                    "github": f"{github}",
+                    "linkedin": f"{linkedin}",
+                    "projects": f"{projects}",
+                    "classes": f"{classes}",
+                    "other": f"{other}",
+                    "message": "All fields saved successfully."})
 
 if __name__ == '__main__':
     app.run(debug=True)

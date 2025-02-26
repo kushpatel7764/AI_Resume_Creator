@@ -32,10 +32,10 @@ def get_all_json_objects(filenames):
 
 
 # Connect to database
-def setup_database_with_sql_file(cursor, conn, filename):
+def setup_database_with_sql_file(cursor, conn, sql_filename):
     # AI gen start here ------------------
     setup_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))  # Moves up one level
-    sql_file_path = os.path.join(setup_dir, filename)
+    sql_file_path = os.path.join(setup_dir, sql_filename)
     # AI ends ----------------------------
     # Read the SQL file
     with open(sql_file_path, "r") as file:
@@ -45,7 +45,6 @@ def setup_database_with_sql_file(cursor, conn, filename):
     cursor.executescript(sql_script)
     # Commit changes
     conn.commit()
-
 
 
 # Insert data into the job table
@@ -171,27 +170,56 @@ def insert_to_user_profile(conn, cursor, user_profile):
 
     conn.commit()
 
-# Function creates the entire database and places jobs info from json files in the database as well.
-def initialize_database(database_path, json_files=None, user_profile=None):
-    # Connect to the SQLite database (or create one if it doesn't exist)
+
+def initialize_job_tables(database_path):
+    """
+    Sets up job-related tables in the database.
+    """
     conn = sqlite3.connect(database_path)
     cursor = conn.cursor()
-    if json_files is not None:
-        # First setup jobs and job_providers tables
-        setup_database_with_sql_file(cursor, conn, "job_database.sql")
-        all_json_obj = get_all_json_objects(json_files)
-        for obj in all_json_obj:
-            # Insert json info in database
-            insert_to_job(conn, cursor, obj)
-            insert_to_job_provider(conn, cursor, obj['id'], obj.get('jobProviders', []))
-        print("Data successfully inserted!")
-    if user_profile is not None:
-        # Second setup user_profile, projects, and classes table
-        setup_database_with_sql_file(cursor, conn, "user_database.sql")
-        insert_to_user_profile(conn, cursor, user_profile)
+    setup_database_with_sql_file(cursor, conn, "job_database.sql")
     conn.close()
 
 
+def initialize_user_tables(database_path):
+    """
+    Sets up user-related tables in the database.
+    """
+    conn = sqlite3.connect(database_path)
+    cursor = conn.cursor()
+    setup_database_with_sql_file(cursor, conn, "user_database.sql")
+    conn.close()
 
+
+def insert_job_data(database_path, json_files):
+    """
+    Make sure job database is initialized and insert job and job provider data from JSON files.
+    json_files: is an array containing JSON filenames.
+    """
+    initialize_job_tables(database_path)
+    conn = sqlite3.connect(database_path)
+    cursor = conn.cursor()
+
+    all_json_obj = get_all_json_objects(json_files)
+    for obj in all_json_obj:
+        insert_to_job(conn, cursor, obj)
+        insert_to_job_provider(conn, cursor, obj['id'], obj.get('jobProviders', []))
+
+    print("Job data successfully inserted!")
+    conn.close()
+
+
+def insert_user_profile_data(database_path, user_profile):
+    """
+    Make sure user tables are initialized and inserts user profile data given in the parameter to the database.
+    """
+    initialize_user_tables(database_path)
+    conn = sqlite3.connect(database_path)
+    cursor = conn.cursor()
+
+    insert_to_user_profile(conn, cursor, user_profile)
+
+    print("User profile data successfully inserted!")
+    conn.close()
 
 #initialize_database("../Jobs_Database.db", ["rapid_job1.json", "rapid_jobs2.json"])
