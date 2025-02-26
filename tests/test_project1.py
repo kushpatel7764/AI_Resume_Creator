@@ -91,8 +91,9 @@ class TestJobFunctionality(unittest.TestCase):
         cursor.execute('''
             INSERT INTO jobs (id, title, site, location, description, salary_range, max_amount, min_amount, interval)
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-        ''', ("2", "Data Analyst", "LinkedIn", "San Francisco, CA", "Analyze datasets", "$60k-$90k", 90000, 60000,
-             "yearly"))
+        ''', (
+            "2", "Data Analyst", "LinkedIn", "San Francisco, CA", "Analyze datasets", "$60k-$90k", 90000, 60000, "yearly"
+        ))
         conn.commit()
 
         job_id = "2"
