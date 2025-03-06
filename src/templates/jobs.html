@@ -1,18 +1,21 @@
 {% extends "index.html" %}
 
-{% block title %}User Profile{% endblock %}
+{% block title %} Jobs {% endblock %}
 
 {% block content %}
 <div class="job-list">
     {% for job in jobs %}
     <div class="job-card">
-        <h2>{{ job.title }}</h2>
-        <p><strong>{{ job.site }}</strong> - {{ job.job_url }} -
-            {{ job.salary_range if job.salary_range else job.max_amount }}
-            {{ job.interval if not job.salary_range else ""}}
-            {{ "Salary Range Not Specified " if not job.salary_range and not job.max_amount else "" }}
-        </p>
-        <a href="{{ url_for('job_detail', job_id=job.id) }}">View Details</a>
+        <div>
+            <h2>{{ job.title }}</h2>
+            <p><strong>{{ job.site }}</strong> - {{ job.job_url }} -
+                {{ job.salary_range if job.salary_range else job.max_amount }}
+                {{ job.interval if not job.salary_range else ""}}
+                {{ "Salary Range Not Specified " if not job.salary_range and not job.max_amount else "" }}
+            </p>
+            <a href="{{ url_for('job_detail', job_id=job.id) }}">View Details</a>
+        </div>
+        <button onclick=window.location.href="{{ url_for('create_resume_with_job_id', job_id=job.id) }}">Select This Job</button>
     </div>
     {% endfor %}
 </div>

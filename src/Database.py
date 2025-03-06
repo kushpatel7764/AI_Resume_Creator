@@ -3,7 +3,7 @@ import sqlite3
 import os
 
 import src.Utility
-# TODO: Improve naming, a lot of variables that read something_name actually should be saying something_path
+# TODO: Change Database ID as phone number
 
 
 # Function to get all json objects

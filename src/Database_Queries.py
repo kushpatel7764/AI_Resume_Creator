@@ -22,6 +22,21 @@ def get_jobs(db):
 
     return job_list
 
+def get_profiles(db):
+    conn = sqlite3.connect(db)
+    cursor = conn.cursor()
+    cursor.execute("SELECT id, name FROM user_profiles")
+    profiles = cursor.fetchall()
+    conn.close()
+    profile_list = []
+    for profile in profiles:
+        profile_list.append({
+            "id": profile[0],
+            "name": profile[1],
+        })
+
+    return profile_list
+
 
 # Function to fetch a job by ID
 def get_job_by_id(db, job_id):
@@ -44,5 +59,26 @@ def get_job_by_id(db, job_id):
             "max_amount": job[6],
             "min_amount": job[7],
             "interval": job[8]
+        }
+    return None
+
+
+# Function to fetch a job by ID
+def get_profile_by_id(db, profile_id):
+    # AI used here
+    conn = sqlite3.connect(db)
+    cursor = conn.cursor()
+    cursor.execute("SELECT id, name, email, phone, linkedin, other FROM user_profiles WHERE id = ?", (profile_id,))
+    profile = cursor.fetchone()
+    conn.close()
+
+    if profile:
+        return {
+            "id": profile[0],
+            "name": profile[1],
+            "email": profile[2],
+            "phone": profile[3],
+            "linkedin": profile[4],
+            "other": profile[5]
         }
     return None

@@ -1,5 +1,10 @@
 # KushPatel_Project1
-This project uses Gemini A.I. model to generate a resume in Markdown format. To create the resume, the A.I. model is provided with a job description and a personal description. A WebUI has been added to this project for easier user interactions. To view the website, navigate to the src directory of this project and run python app.py. While the script is running, open your browser and go to http://127.0.0.1:5000. The website has two tabs: Available Jobs and Profile. In the Available Jobs tab, users can browse job listings. In the Profile tab, users to save information that can help their employability. 
+This project uses Gemini A.I. model to generate a resume in Markdown format. To create the resume, the A.I. model is  
+provided with a job description and a personal description. A WebUI has been added to this project for easier user 
+interactions. To view the website, navigate to the src directory of this project and run python app.py. While the script
+is running, open your browser and go to http://127.0.0.1:5000. The website has two tabs: Available Jobs and Profile. In 
+the Available Jobs tab, users can browse job listings. In the Profile tab, users to save information that can help their
+employability. 
 
 **Instructions to Run the Program:**
 1. Ensure libraries from `requirements.txt` are installed.
@@ -44,4 +49,3 @@ details to my description. This led the AI to generate a Markdown resume that wa
   Then, I instructed the AI to incorporate keywords from the job description into my resume to further improve its relevance
 and effectiveness.
 
---Some parts of this README.md are AI-assisted.

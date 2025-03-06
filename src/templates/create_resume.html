@@ -1,0 +1,22 @@
+{% extends "index.html" %}
+
+{% block title %}Create Resume{% endblock %}
+
+{% block content %}
+<h2>Create Resume</h2>
+<form id="profileForm" action="{{ url_for('save_profile') }}" method="POST">
+{% if job %}
+<label>Selected Job: {{ job.title }}</label>
+{% endif %}
+
+<button id="SelectJob" type="button" onclick=window.location.href="{{ url_for('job_list') }}">{{ "Select a new Job" if job else "Select a Job" }}</button>
+
+
+<label for="user_profile">Select a Profile:</label>
+<select name = "user_profile">
+    {% for profile in profiles %}
+        <option value="{{ profile.id }}">{{ profile.name }}</option>
+    {% endfor %}
+</select>
+</form>
+{% endblock %}
