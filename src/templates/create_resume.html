@@ -4,7 +4,7 @@
 
 {% block content %}
 <h2>Create Resume</h2>
-<form id="profileForm" action="{{ url_for('save_profile') }}" method="POST">
+<form id="profileForm" action="{{ url_for('create_resume', job_id=job.id, profile_id=profile.id) }}" method="POST">
 {% if job %}
 <label>Selected Job: {{ job.title }}</label>
 {% endif %}
@@ -18,5 +18,7 @@
         <option value="{{ profile.id }}">{{ profile.name }}</option>
     {% endfor %}
 </select>
+
+<button id="SendToAI" type="submit">Create Resume</button>
 </form>
 {% endblock %}

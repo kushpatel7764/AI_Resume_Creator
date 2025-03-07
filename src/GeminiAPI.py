@@ -25,12 +25,12 @@ def get_random_json_object():
     return random_job
 
 
-def ask_gemini(user_info, job_info):
+def ask_gemini(user_info, job_des):
     # Get the API key from the api_secrets file to access Google's Gemini AI model
     key = gemini_api_key
     # Using the random_json_object(), get a random job and then extract the job description from the job.
     # job_json_random = get_random_json_object()
-    job_description = job_info
+    job_description = job_des
 
     # Personal information to be included in the resume
     personal_info = user_info

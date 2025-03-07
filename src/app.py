@@ -30,20 +30,27 @@ def job_detail(job_id):
 def profile_page():
     return render_template("user_profile.html")
 
-@app.route('/create_resume')
-def create_resume():
+@app.route('/resume')
+def resume():
     # TODO: If two profiles have same names then the user will not be able to distinguish between the two
     profiles = src.Database_Queries.get_profiles(db_path)
     return render_template("create_resume.html", profiles=profiles, job=None)
 
-@app.route('/create_resume_with_job_id/<string:job_id>')
-def create_resume_with_job_id(job_id):
+@app.route('/resume_with_job_id/<string:job_id>')
+def resume_with_job_id(job_id):
     job = None
     # TODO: If two profiles have same names then the user will not be able to distinguish between the two
     profiles = src.Database_Queries.get_profiles(db_path)
     if job_id:
         job = src.Database_Queries.get_job_by_id(db_path, job_id)
     return render_template("create_resume.html", profiles=profiles, job=job)
+
+@app.route('/create_resume/<string:job_id>/<string:profile_id>')
+def create_resume(job_id, profile_id):
+    job = src.Database_Queries.get_job_by_id(db_path, job_id) if job_id else ""
+    profile = src.Database_Queries.get_profile_by_id(db_path, profile_id) if profile_id else ""
+
+    pass
 
 @app.route('/save_profile', methods=['POST'])
 def save_profile():

@@ -1,4 +1,6 @@
 import sqlite3
+import os
+import src.Utility
 
 
 def get_jobs(db):
@@ -63,7 +65,7 @@ def get_job_by_id(db, job_id):
     return None
 
 
-# Function to fetch a job by ID
+# Function to fetch a profile by ID
 def get_profile_by_id(db, profile_id):
     # AI used here
     conn = sqlite3.connect(db)
@@ -82,3 +84,28 @@ def get_profile_by_id(db, profile_id):
             "other": profile[5]
         }
     return None
+
+# Function to fetch a project by ID
+def get_projects_by_id(db, profile_id):
+    # AI used here
+    conn = sqlite3.connect(db)
+    cursor = conn.cursor()
+    cursor.execute("SELECT description FROM projects WHERE user_id = ?", (profile_id,))
+    projects = cursor.fetchall()
+    conn.close()
+
+    project_string = src.Utility.array_to_string(projects)
+    return project_string
+
+# Function to fetch a project by ID
+def get_classes_by_id(db, profile_id):
+    # AI used here
+    conn = sqlite3.connect(db)
+    cursor = conn.cursor()
+    cursor.execute("SELECT name FROM classes WHERE user_id = ?", (profile_id,))
+    classes = cursor.fetchall()
+    conn.close()
+
+    class_string = src.Utility.array_to_string(classes)
+    return class_string
+
