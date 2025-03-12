@@ -28,12 +28,13 @@ def user_profile_to_paragraph(profile, projects, classes):
 def user_profile_to_keywords(profile, projects, classes):
     return_str = ""
     #AI does not need the profile id
-    profile.pop("id")
+    if "id" in profile:
+        profile.pop("id")
 
     for key, value in profile.items():
         return_str += key + ": " + str(value) + "\n"
-    return_str += "\n" + projects
-    return_str += "\n" + classes
+    return_str += "Projects: " + projects + "\n"
+    return_str += "Classes: " + classes
     return return_str
 
 def convert_markdown_to_pdf(markdown_file, output_pdf):

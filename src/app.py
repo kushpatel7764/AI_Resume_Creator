@@ -55,7 +55,10 @@ def create_resume_request(job_id, profile_id):
     classes = src.Database_Queries.get_classes_by_id(db_path, profile_id)
     user_info_str = Utility.user_profile_to_keywords(profile, projects, classes)
 
-    GeminiAPI.ask_gemini(user_info_str, job["description"], "resume") # Will create a resume markdown file
+    response = GeminiAPI.ask_gemini(user_info_str, job["description"], "resume")
+
+    GeminiAPI.save_response(response,  "Marked_Resume", "Marked_Cover_Letter",
+                            "resume")
 
     # Getting all profile to rerender the create resume page
     profiles = src.Database_Queries.get_profiles(db_path)
@@ -70,7 +73,10 @@ def create_cover_letter_request(job_id, profile_id):
     classes = src.Database_Queries.get_classes_by_id(db_path, profile_id)
     user_info_str = Utility.user_profile_to_keywords(profile, projects, classes)
 
-    GeminiAPI.ask_gemini(user_info_str, job["description"], "cover letter") # Will create a resume markdown file
+    response = GeminiAPI.ask_gemini(user_info_str, job["description"], "cover letter")
+
+    GeminiAPI.save_response(response, "Marked_Resume", "Marked_Cover_Letter",
+                            "cover letter")
 
     # Getting all profile to rerender the create resume page
     profiles = src.Database_Queries.get_profiles(db_path)

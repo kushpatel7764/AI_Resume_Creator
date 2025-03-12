@@ -25,18 +25,22 @@ def get_random_json_object():
         random_job = random.choice(random_job_section)
     return random_job
 
+def create_AI_prompt(personal_info, job_description, res_or_cov):
+    AI_Prompt = (
+        f"Remember my Personal Information: {personal_info}\nRemember the Job description: "
+        f"{job_description}\nNow create a {res_or_cov} in markdown format that will be designed from "
+        f"my personal information, using keywords from job description that I provided"
+    )
+
+    return AI_Prompt
+
 
 # res_or_cov: resume or cover letter, parameter can only be "resume" or "cover letter"
 def ask_gemini(user_info, job_des, res_or_cov):
     # Get the API key from the api_secrets file to access Google's Gemini AI model
     key = gemini_api_key
-    # Using the random_json_object(), get a random job and then extract the job description from the job.
-    # job_json_random = get_random_json_object()
-    job_description = job_des
 
-    # Personal information to be included in the resume
-    personal_info = user_info
-
+    prompt = create_AI_prompt(user_info, job_des, res_or_cov)
 
     # Prepare the API request payload for Google's Gemini AI model
     url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key={key}"
@@ -46,9 +50,7 @@ def ask_gemini(user_info, job_des, res_or_cov):
             {
                 "parts": [
                     {
-                        "text": f"Remember my Personal Information: {personal_info} \n Remember the Job description: "
-                        f"{job_description} \n Now create a {res_or_cov} in markdown format that will be designed from "
-                        f"my personal information, using keywords from job description that I provided"
+                        "text": prompt
                     }
                 ]
             }
@@ -57,6 +59,9 @@ def ask_gemini(user_info, job_des, res_or_cov):
 
     # Send a post request to the Gemini API
     response = requests.post(url, headers=headers, json=data)
+    return response
+
+def save_response(response, save_res_name, save_cov_name, res_or_cov):
     response_json = response.json()
 
     # Extract the generated markdown resume from the API response
@@ -64,11 +69,11 @@ def ask_gemini(user_info, job_des, res_or_cov):
 
     # Save the generated resume to a markdown file
     if res_or_cov == "Resume":
-        new_markdown_file_path = "./Marked_Resume.md"
-        pdf_save_path = "./Marked_Resume.pdf"
+        new_markdown_file_path = f"./{save_res_name}.md"
+        pdf_save_path = f"./{save_res_name}.pdf"
     else:
-        new_markdown_file_path = "./Marked_Cover_Letter.md"
-        pdf_save_path = "./Marked_Cover_Letter.pdf"
+        new_markdown_file_path = f"./{save_cov_name}.md"
+        pdf_save_path = f"./{save_cov_name}.pdf"
 
     with open(new_markdown_file_path, "w") as f:
         f.write(marked_resume)

@@ -1,11 +1,17 @@
 import os
 import sqlite3
 import unittest
+import json
 from src.Database import insert_job_data
 from src.Database import insert_user_profile_data
 from src.Database import setup_database_with_sql_file
 from src.Database import get_all_json_objects
 from src.Database_Queries import get_job_by_id
+from src.Database_Queries import get_profile_by_id
+from src.Database_Queries import get_projects_by_id
+from src.Database_Queries import get_classes_by_id
+from src.GeminiAPI import ask_gemini
+from src.Utility import user_profile_to_keywords
 from src.app import app
 
 
@@ -129,7 +135,8 @@ class SaveProfileTestCases(unittest.TestCase):
         with app.test_client() as client:
             app.config['TESTING'] = True  # Set to True during testing
             user_input = {
-                'name': 'Kush Patel',
+                'profile_name': "profile1",
+                'user_name': 'Kush Patel',
                 'email': 'kushpatelrp1234@gmail.com',
                 'phone': '0123456789',
                 'github': 'github.com',
@@ -141,7 +148,8 @@ class SaveProfileTestCases(unittest.TestCase):
 
             response = client.post("/save_profile", data=user_input)
             server_response = response.get_json()
-            self.assertEqual(server_response["name"], user_input['name'])
+            self.assertEqual(server_response["profile_name"], user_input['profile_name'])
+            self.assertEqual(server_response["user_name"], user_input['user_name'])
             self.assertEqual(server_response["email"], user_input['email'])
             self.assertEqual(server_response["phone"], user_input['phone'])
             self.assertEqual(server_response["github"], user_input['github'])
@@ -153,7 +161,8 @@ class SaveProfileTestCases(unittest.TestCase):
 
     def test_save_profile(self):
         user_profile = [
-            'Shiv Patel',  # name
+            'Profile1', # profile_name
+            'Shiv Patel',  # user_name
             'shivpatelrp123@gmail.com',  # email
             '5089717530',  # phone
             'https://github.com/shivpatel',  # github
@@ -170,15 +179,16 @@ class SaveProfileTestCases(unittest.TestCase):
         cursor = conn.cursor()
 
         # Check user_profiles table
-        cursor.execute("SELECT * FROM user_profiles WHERE email = ?", (user_profile[1],))
+        cursor.execute("SELECT * FROM user_profiles WHERE email = ?", (user_profile[2],))
         user = cursor.fetchone()
         self.assertIsNotNone(user, "User profile should be inserted")
-        self.assertEqual(user[1], user_profile[0], "Name should match")
-        self.assertEqual(user[2], user_profile[1], "Email should match")
-        self.assertEqual(user[3], user_profile[2], "Phone should match")
-        self.assertEqual(user[4], user_profile[3], "github should match")
-        self.assertEqual(user[5], user_profile[4], "linkedin should match")
-        self.assertEqual(user[6], user_profile[7], "other should match")
+        self.assertEqual(user[1], user_profile[0], "profile name should match")
+        self.assertEqual(user[2], user_profile[1], "username should match")
+        self.assertEqual(user[3], user_profile[2], "Email should match")
+        self.assertEqual(user[4], user_profile[3], "Phone should match")
+        self.assertEqual(user[5], user_profile[4], "github should match")
+        self.assertEqual(user[6], user_profile[5], "linkedin should match")
+        self.assertEqual(user[7], user_profile[8], "other should match")
 
         # Check projects table
         cursor.execute("SELECT * FROM projects WHERE user_id = ?", (user[0],))
@@ -195,6 +205,166 @@ class SaveProfileTestCases(unittest.TestCase):
         self.assertEqual(classes[0][2], "Class1", "First class should be 'Class1'")
         conn.close()
         os.remove("../test_job.db")
+
+class TestLLMRequest(unittest.TestCase):
+    def test_llm_api_request(self):
+        user_info = "I am a computer science student at Bridgewater University. I also work for google."
+        job_des = "We need a software developer who has worked for google before."
+        response = ask_gemini(user_info, job_des, "resume")
+
+        assert response.status_code == 200, f"Expected 200, but got {response.status_code}"
+        print("Test passed: Received 200 OK response")
+
+class TestAIPrompt(unittest.TestCase):
+    """
+    Here I want to test that AI prompt is being built correctly. First, I need to make sure that the database queries
+    are giving the correct output. The function, get_job_by_id(), gets job description from database. This function has
+    already been tested in test_job_details test case. The functions such as get_profile_by_id, get_projects_by_id,
+    get_classes_by_id that get user_info from database need to be tested.
+    """
+
+    def setUp(self):
+        self.user_profile = [
+            'Profile1', 'Shiv Patel', 'shivpatelrp@gmail.com', '1234567890',
+            'https://github.com/shivpatel', 'https://linkedin.com/in/shivpatel',
+            'Project1, Project2', 'Class1, ', 'Other info'
+        ]
+        self.db_path = "../test_job.db"
+        insert_user_profile_data(self.db_path, user_profile=self.user_profile)
+        self.conn = sqlite3.connect(self.db_path)
+        self.cursor = self.conn.cursor()
+
+    def close_everything(self):
+        self.conn.close()
+        if os.path.exists(self.db_path):
+            os.remove(self.db_path)
+
+    # This test ensures that get_profile_by_id() function retrieves data from database accurately.
+    def test_get_profile_by_id(self):
+        try:
+            # The Function being tested
+            profile = get_profile_by_id(self.db_path, 1)
+
+            # Make sure profile contains the correct information
+            self.assertIsNotNone(profile, "User profile should be inserted")
+            self.assertEqual(profile["profile_name"], self.user_profile[0], "profile name should match")
+            self.assertEqual(profile["user_name"], self.user_profile[1], "username should match")
+            self.assertEqual(profile["email"], self.user_profile[2], "Email should match")
+            self.assertEqual(profile["phone"], self.user_profile[3], "Phone should match")
+            self.assertEqual(profile["github"], self.user_profile[4], "github should match")
+            self.assertEqual(profile["linkedin"], self.user_profile[5], "linkedin should match")
+            self.assertEqual(profile["other"], self.user_profile[8], "other should match")
+
+            profile = get_profile_by_id("../test_job.db", 0)
+            self.assertIsNone(profile, "User profile should not be returned for an invalid id")
+        finally:
+            self.close_everything()
+
+    def test_get_projects_by_id(self):
+        try:
+            # The Function being tested
+            projects = get_projects_by_id(self.db_path, 1)
+
+            # Make sure profile contains the correct information
+            self.assertIsNotNone(projects, "projects should be retrieved")
+            self.assertEqual(projects, "Project1, Project2", "Projects output should match")
+            self.assertIsInstance(projects, str, "Projects should be returned as a string")
+
+            projects = get_profile_by_id("../test_job.db", -1)
+            self.assertIsNone(projects, "Projects should not be returned for an invalid id")
+
+            # Testing with a non-existent ID
+            projects = get_projects_by_id("../test_job.db", 23)
+            self.assertEqual(projects, "","projects should be empty for a non-existent ID")
+
+            # Testing when database is empty
+            self.cursor.execute("DELETE FROM projects")
+            self.conn.commit()
+
+            projects = get_projects_by_id("../test_job.db", 1)
+            self.assertEqual(projects, "","projects should be empty after deleting all entries")
+
+        finally:
+            self.close_everything()
+
+    def test_get_classes_by_id(self):
+        try:
+            # The Function being tested
+            classes = get_classes_by_id("../test_job.db", 1)
+
+            # Make sure profile contains the correct information
+            self.assertIsNotNone(classes, "Classes should be retrieved")
+            self.assertEqual(classes, "Class1", "Classes output should match")
+            self.assertIsInstance(classes, str, "Classes should be returned as a string")
+
+            classes = get_classes_by_id("../test_job.db", -1)
+            self.assertEqual(classes, "", "Classes should be empty for an invalid id")
+
+            # Testing with a non-existent ID
+            classes = get_classes_by_id("../test_job.db", 23)
+            self.assertEqual(classes, "","Classes should be empty for a non-existent ID")
+
+            # Testing when database is empty
+            self.cursor.execute("DELETE FROM Classes")
+            self.conn.commit()
+
+            classes = get_classes_by_id("../test_job.db", 1)
+            self.assertEqual(classes, "","Classes should be empty after deleting all entries")
+        finally:
+            self.close_everything()
+
+    # This function takes user_profile, projects, and classes data and puts it all in one string.
+    # Testing this function will ensure that user_info is being built properly.
+    def test_user_profile_to_keywords(self):
+        try:
+            expected_output = ("profile_name: Profile1\n"
+                               "user_name: Shiv Patel\n"
+                               "email: shivpatelrp@gmail.com\n"
+                               "phone: 1234567890\n"
+                               "github: https://github.com/shivpatel\n"
+                               "linkedin: https://linkedin.com/in/shivpatel\n"
+                               "other: Other info\n"
+                               "Projects: Project1, Project2\n"
+                               "Classes: Class1")
+
+            profile = get_profile_by_id(self.db_path, 1)
+            projects = get_projects_by_id(self.db_path, 1)
+            classes = get_classes_by_id(self.db_path, 1)
+
+            # This function is being tested here
+            user_info = user_profile_to_keywords(profile, projects, classes)
+
+            self.assertEqual(user_info, expected_output, "user_info should be returned as expected")
+
+            # Check for correct formatting, A.I. helped do this assert.
+            self.assertTrue(user_info.count("\n") == 8, "There should be exactly 8 newline characters in output")
+
+            # check empty values don't break the function
+            profile["other"] = ""
+            user_info_empty_other = user_profile_to_keywords(profile, projects, classes)
+            self.assertIn("other: \n", user_info_empty_other, "Empty 'other' field should not have extra newline")
+
+            empty_projects = ""
+            user_info_empty_projects = user_profile_to_keywords(profile, empty_projects, classes)
+            self.assertIn("Projects: \n", user_info_empty_projects, "Empty projects should still be included")
+        finally:
+            self.close_everything()
+
+    # Now make sure that user_info and job description are present in the prompt that is being submitted to AI
+    def test_prompt_submitted_to_AI(self):
+        user_info = "I am a computer science student at Bridgewater University. I also work for google."
+        job_des = "We need a software developer who has worked for google before."
+
+        # Testing ask_gemini to ensure it is properly submitting user_info and job_des into the prompt being given to AI.
+        response = ask_gemini(user_info, job_des, "resume")
+        prompt_given_json = json.loads(response.request.body)
+        prompt_given = prompt_given_json["contents"][0]["parts"][0]["text"]
+
+
+
+        self.assertIn(prompt_given, user_info, "prompt_given should contain user_info")
+        self.assertIn(prompt_given, job_des, "prompt_given should contain job_des")
+
 
 
 if __name__ == "__main__":
