@@ -36,7 +36,6 @@ def profile_page():
 
 @app.route('/resume')
 def resume():
-    # TODO: If two profiles have same names then the user will not be able to distinguish between the two
     profiles = src.Database_Queries.get_profiles(db_path)
     return render_template("create_resume.html", profiles=profiles, job=None)
 
