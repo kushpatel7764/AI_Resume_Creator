@@ -134,21 +134,22 @@ def insert_to_job_provider(conn, cursor, job_id, providers):
 # user_profile is an array the container all the information for the user_profile table. It can contain nulls.
 # At each index of the array there should be information for a field of the database respectively.
 def insert_to_user_profile(conn, cursor, user_profile):
-    name = user_profile[0]
-    email = user_profile[1]
-    phone = user_profile[2]
-    github = user_profile[3]
-    linkedin = user_profile[4]
-    projects = user_profile[5]
-    classes = user_profile[6]
-    other = user_profile[7]
+    profile_name = user_profile[0]
+    user_name = user_profile[1]
+    email = user_profile[2]
+    phone = user_profile[3]
+    github = user_profile[4]
+    linkedin = user_profile[5]
+    projects = user_profile[6]
+    classes = user_profile[7]
+    other = user_profile[8]
 
     array_of_projects = src.Utility.string_to_array(projects)
     array_of_classes = src.Utility.string_to_array(classes)
 
-    cursor.execute('''INSERT OR IGNORE INTO user_profiles(name, email, phone, github, linkedin, other)
-                          VALUES (?, ?, ?, ?, ?, ?)''',
-                   (name, email, phone, github, linkedin, other))
+    cursor.execute('''INSERT OR IGNORE INTO user_profiles(profile_name, user_name, email, phone, github, linkedin, other)
+                          VALUES (?, ?, ?, ?, ?, ?, ?)''',
+                   (profile_name, user_name, email, phone, github, linkedin, other))
     _user_id = cursor.lastrowid
 
     # TODO: Make sure user_id is never zero.

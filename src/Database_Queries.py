@@ -26,14 +26,14 @@ def get_jobs(db):
 def get_profiles(db):
     conn = sqlite3.connect(db)
     cursor = conn.cursor()
-    cursor.execute("SELECT id, name FROM user_profiles")
+    cursor.execute("SELECT id, profile_name FROM user_profiles")
     profiles = cursor.fetchall()
     conn.close()
     profile_list = []
     for profile in profiles:
         profile_list.append({
             "id": profile[0],
-            "name": profile[1],
+            "profile_name": profile[1],
         })
 
     return profile_list
@@ -69,18 +69,20 @@ def get_profile_by_id(db, profile_id):
     # AI used here
     conn = sqlite3.connect(db)
     cursor = conn.cursor()
-    cursor.execute("SELECT id, name, email, phone, linkedin, other FROM user_profiles WHERE id = ?", (profile_id,))
+    cursor.execute("SELECT id, profile_name, user_name, email, phone, github, linkedin, other FROM user_profiles WHERE id = ?", (profile_id,))
     profile = cursor.fetchone()
     conn.close()
 
     if profile:
         return {
             "id": profile[0],
-            "name": profile[1],
-            "email": profile[2],
-            "phone": profile[3],
-            "linkedin": profile[4],
-            "other": profile[5]
+            "profile_name": profile[1],
+            "user_name": profile[2],
+            "email": profile[3],
+            "phone": profile[4],
+            "github": profile[5],
+            "linkedin": profile[6],
+            "other": profile[7]
         }
     return None
 

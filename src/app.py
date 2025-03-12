@@ -4,12 +4,14 @@ import src.Database
 import src.Utility as Utility
 import src.GeminiAPI as GeminiAPI
 from flask import Flask, render_template, request, jsonify, send_file
+
+from src.Database import initialize_user_tables
+
 app = Flask(__name__)
 
 # Get database path
 project_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 db_path = os.path.join(project_dir, 'Jobs_Database.db')
-
 
 @app.route('/')
 def index():
@@ -41,7 +43,6 @@ def resume():
 @app.route('/resume_with_job_id/<string:job_id>')
 def resume_with_job_id(job_id):
     job = None
-    # TODO: If two profiles have same names then the user will not be able to distinguish between the two
     profiles = src.Database_Queries.get_profiles(db_path)
     if job_id:
         job = src.Database_Queries.get_job_by_id(db_path, job_id)
@@ -90,7 +91,8 @@ def download_cover_letter():
 
 @app.route('/save_profile', methods=['POST'])
 def save_profile():
-    name = request.form['name']
+    profile_name = request.form['profile_name']
+    user_name = request.form['user_name']
     email = request.form['email']
     phone = request.form['phone']
     github = request.form.get('github', '')
@@ -99,13 +101,14 @@ def save_profile():
     classes = request.form.get('classes', '')
     other = request.form.get('other', '')
 
-    user_info = [name, email, phone, github, linkedin, projects, classes, other]
+    user_info = [profile_name, user_name, email, phone, github, linkedin, projects, classes, other]
 
     # Only insert to the database if not in testing mode
     if not app.config['TESTING']:
         src.Database.insert_user_profile_data(db_path, user_info)
 
-    return jsonify({"name": f"{name}",
+    return jsonify({"profile_name": f"{profile_name}",
+                    "user_name": f"{user_name}",
                     "email": f"{email}",
                     "phone": f"{phone}",
                     "github": f"{github}",

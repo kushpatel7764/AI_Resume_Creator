@@ -11,7 +11,7 @@
             <label for="user_profile">Select a Profile:</label>
             <select id="user_profile" name = "user_profile">
                 {% for profile in profiles %}
-                    <option value="{{ profile.id }}">{{ profile.name }}</option>
+                    <option value="{{ profile.id }}">{{ profile.profile_name }}</option>
                 {% endfor %}
             </select>
 

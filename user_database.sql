@@ -1,6 +1,7 @@
 CREATE TABLE IF NOT EXISTS user_profiles (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name TEXT NOT NULL,
+    profile_name TEXT NOT NULL,
+    user_name TEXT NOT NULL,
     email TEXT NOT NULL UNIQUE,
     phone TEXT NOT NULL,
     github TEXT,
@@ -21,4 +22,3 @@ CREATE TABLE IF NOT EXISTS classes (
     name TEXT,
     FOREIGN KEY (user_id) REFERENCES user_profiles(id) ON DELETE CASCADE
 );
-
