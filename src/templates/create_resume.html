@@ -18,10 +18,10 @@
             <label for="resume_or_cover">Creating a:</label>
             <select id="resume_or_cover" name = "resume_or_cover">
                 <option value="resume">Resume</option>
-                <option value="cover letter">Cover Letter</option>
+                <option value="cover_letter">Cover Letter</option>
             </select>
 
-            <button id="SendToAI" type="submit">Create Resume</button>
+            <button id="SendToAI" type="submit">Create</button>
         {% else %}
             <button id="SelectProfile" type="button" onclick=window.location.href="{{ url_for('profile_page') }}">{{ "Create a Profile" }}</button>
         {% endif %}
@@ -30,27 +30,37 @@
     {% endif %}
 </form>
 {% if _enable_download %}
-    <form action="{{ url_for('download_resume') }}" method="get">
+    <form id="downloadForm" action="{{ url_for('download_resume') }}" method="get">
         <button type="submit">Download PDF</button>
+        <small class="input-hint">This button installs the selected option from the "Creating a" section.</small>
     </form>
 {% endif %}
 <script>
-        document.getElementById('profileForm').addEventListener('submit', function(event) {
-            event.preventDefault();
-            let profileId = document.getElementById("user_profile").value;
-            let jobId = "{{ job.id }}";  // Get job ID from the template
-            let create_type = document.getElementById("resume_or_cover").value;
-            if (profileId) {
-                if (create_type.equals("resume")) {
-                    this.action = `/create_resume_request/${jobId}/${profileId}`;
-                } else {
-                    this.action = `/create_cover_letter_request/${jobId}/${profileId}`;
-                }
-                this.submit();
+    document.getElementById('profileForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        let profileId = document.getElementById("user_profile").value;
+        let jobId = "{{ job.id }}";  // Get job ID from the template
+        let create_type = document.getElementById("resume_or_cover").value;
+        if (profileId) {
+            if (create_type === "resume") {
+                this.action = `/create_resume_request/${jobId}/${profileId}`;
             } else {
-                alert("Please select a profile or job before proceeding.");
+                this.action = `/create_cover_letter_request/${jobId}/${profileId}`;
             }
-        })
-
+            this.submit();
+        } else {
+            alert("Please select a profile or job before proceeding.");
+        }
+    })
+    document.getElementById("downloadForm").addEventListener('submit', function(event) {
+        event.preventDefault();
+        let download_type = document.getElementById("resume_or_cover").value;
+        if (download_type === "resume") {
+            this.action = `/download_resume`;
+        } else {
+            this.action = `/download_cover_letter`;
+        }
+        this.submit();
+    })
 </script>
 {% endblock %}

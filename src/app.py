@@ -83,6 +83,10 @@ def download_resume():
     pdf_path = "./Marked_Resume.pdf"  # Path to the generated PDF file
     return send_file(pdf_path, as_attachment=True)
 
+@app.route('/download_cover_letter')
+def download_cover_letter():
+    pdf_path = "./Marked_Cover_Letter.pdf"  # Path to the generated PDF file
+    return send_file(pdf_path, as_attachment=True)
 
 @app.route('/save_profile', methods=['POST'])
 def save_profile():
