@@ -85,7 +85,7 @@ nav a:hover {
     display: block;
 }
 
-#SelectJob{
+#SelectJob, #SelectProfile{
     margin-bottom: 30px;
     background-color: #007bff;
 }

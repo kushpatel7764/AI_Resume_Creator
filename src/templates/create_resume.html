@@ -4,21 +4,53 @@
 
 {% block content %}
 <h2>Create Resume</h2>
-<form id="profileForm" action="{{ url_for('create_resume', job_id=job.id, profile_id=profile.id) }}" method="POST">
-{% if job %}
-<label>Selected Job: {{ job.title }}</label>
-{% endif %}
+<form id="profileForm" method="POST">
+    {% if job %}
+        <label>Selected Job: {{ job.title }}</label>
+        {% if profiles %}
+            <label for="user_profile">Select a Profile:</label>
+            <select id="user_profile" name = "user_profile">
+                {% for profile in profiles %}
+                    <option value="{{ profile.id }}">{{ profile.name }}</option>
+                {% endfor %}
+            </select>
 
-<button id="SelectJob" type="button" onclick=window.location.href="{{ url_for('job_list') }}">{{ "Select a new Job" if job else "Select a Job" }}</button>
+            <label for="resume_or_cover">Creating a:</label>
+            <select id="resume_or_cover" name = "resume_or_cover">
+                <option value="resume">Resume</option>
+                <option value="cover letter">Cover Letter</option>
+            </select>
 
-
-<label for="user_profile">Select a Profile:</label>
-<select name = "user_profile">
-    {% for profile in profiles %}
-        <option value="{{ profile.id }}">{{ profile.name }}</option>
-    {% endfor %}
-</select>
-
-<button id="SendToAI" type="submit">Create Resume</button>
+            <button id="SendToAI" type="submit">Create Resume</button>
+        {% else %}
+            <button id="SelectProfile" type="button" onclick=window.location.href="{{ url_for('profile_page') }}">{{ "Create a Profile" }}</button>
+        {% endif %}
+    {% else %}
+        <button id="SelectJob" type="button" onclick=window.location.href="{{ url_for('job_list') }}">{{ "Select a new Job" if job else "Select a Job" }}</button>
+    {% endif %}
 </form>
+{% if _enable_download %}
+    <form action="{{ url_for('download_resume') }}" method="get">
+        <button type="submit">Download PDF</button>
+    </form>
+{% endif %}
+<script>
+        document.getElementById('profileForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            let profileId = document.getElementById("user_profile").value;
+            let jobId = "{{ job.id }}";  // Get job ID from the template
+            let create_type = document.getElementById("resume_or_cover").value;
+            if (profileId) {
+                if (create_type.equals("resume")) {
+                    this.action = `/create_resume_request/${jobId}/${profileId}`;
+                } else {
+                    this.action = `/create_cover_letter_request/${jobId}/${profileId}`;
+                }
+                this.submit();
+            } else {
+                alert("Please select a profile or job before proceeding.");
+            }
+        })
+
+</script>
 {% endblock %}

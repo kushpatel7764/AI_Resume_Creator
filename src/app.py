@@ -1,7 +1,9 @@
 import os
 import src.Database_Queries
 import src.Database
-from flask import Flask, render_template, request, jsonify
+import src.Utility as Utility
+import src.GeminiAPI as GeminiAPI
+from flask import Flask, render_template, request, jsonify, send_file
 app = Flask(__name__)
 
 # Get database path
@@ -45,12 +47,42 @@ def resume_with_job_id(job_id):
         job = src.Database_Queries.get_job_by_id(db_path, job_id)
     return render_template("create_resume.html", profiles=profiles, job=job)
 
-@app.route('/create_resume/<string:job_id>/<string:profile_id>')
-def create_resume(job_id, profile_id):
+@app.route('/create_resume_request/<string:job_id>/<string:profile_id>', methods=['POST', 'GET'])
+def create_resume_request(job_id, profile_id):
     job = src.Database_Queries.get_job_by_id(db_path, job_id) if job_id else ""
     profile = src.Database_Queries.get_profile_by_id(db_path, profile_id) if profile_id else ""
+    projects = src.Database_Queries.get_projects_by_id(db_path, profile_id)
+    classes = src.Database_Queries.get_classes_by_id(db_path, profile_id)
+    user_info_str = Utility.user_profile_to_keywords(profile, projects, classes)
 
-    pass
+    GeminiAPI.ask_gemini(user_info_str, job["description"], "resume") # Will create a resume markdown file
+
+    # Getting all profile to rerender the create resume page
+    profiles = src.Database_Queries.get_profiles(db_path)
+
+    return render_template("create_resume.html", profiles=profiles, job=job, _enable_download=True)
+
+@app.route('/create_cover_letter_request/<string:job_id>/<string:profile_id>', methods=['POST', 'GET'])
+def create_cover_letter_request(job_id, profile_id):
+    job = src.Database_Queries.get_job_by_id(db_path, job_id) if job_id else ""
+    profile = src.Database_Queries.get_profile_by_id(db_path, profile_id) if profile_id else ""
+    projects = src.Database_Queries.get_projects_by_id(db_path, profile_id)
+    classes = src.Database_Queries.get_classes_by_id(db_path, profile_id)
+    user_info_str = Utility.user_profile_to_keywords(profile, projects, classes)
+
+    GeminiAPI.ask_gemini(user_info_str, job["description"], "cover letter") # Will create a resume markdown file
+
+    # Getting all profile to rerender the create resume page
+    profiles = src.Database_Queries.get_profiles(db_path)
+
+    return render_template("create_resume.html", profiles=profiles, job=job, _enable_download=True)
+
+
+@app.route('/download_resume')
+def download_resume():
+    pdf_path = "./Marked_Resume.pdf"  # Path to the generated PDF file
+    return send_file(pdf_path, as_attachment=True)
+
 
 @app.route('/save_profile', methods=['POST'])
 def save_profile():

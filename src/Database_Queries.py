@@ -1,5 +1,4 @@
 import sqlite3
-import os
 import src.Utility
 
 
@@ -85,7 +84,7 @@ def get_profile_by_id(db, profile_id):
         }
     return None
 
-# Function to fetch a project by ID
+# Function to fetch projects by userID
 def get_projects_by_id(db, profile_id):
     # AI used here
     conn = sqlite3.connect(db)
@@ -97,7 +96,7 @@ def get_projects_by_id(db, profile_id):
     project_string = src.Utility.array_to_string(projects)
     return project_string
 
-# Function to fetch a project by ID
+# Function to fetch classes by userID
 def get_classes_by_id(db, profile_id):
     # AI used here
     conn = sqlite3.connect(db)

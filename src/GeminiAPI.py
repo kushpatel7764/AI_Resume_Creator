@@ -2,6 +2,7 @@ import random
 import json
 import requests
 from src.api_secrets import gemini_api_key
+import src.Utility as Utility
 
 # Name: Kush Patel
 # Project Description: This program generates a markdown resume by combining a personal description with
@@ -25,7 +26,8 @@ def get_random_json_object():
     return random_job
 
 
-def ask_gemini(user_info, job_des):
+# res_or_cov: resume or cover letter, parameter can only be "resume" or "cover letter"
+def ask_gemini(user_info, job_des, res_or_cov):
     # Get the API key from the api_secrets file to access Google's Gemini AI model
     key = gemini_api_key
     # Using the random_json_object(), get a random job and then extract the job description from the job.
@@ -45,7 +47,7 @@ def ask_gemini(user_info, job_des):
                 "parts": [
                     {
                         "text": f"Remember my Personal Information: {personal_info} \n Remember the Job description: "
-                        f"{job_description} \n Now create a resume in markdown format that will be designed from "
+                        f"{job_description} \n Now create a {res_or_cov} in markdown format that will be designed from "
                         f"my personal information, using keywords from job description that I provided"
                     }
                 ]
@@ -61,26 +63,20 @@ def ask_gemini(user_info, job_des):
     marked_resume = response_json["candidates"][0]["content"]["parts"][0]["text"]
 
     # Save the generated resume to a markdown file
-    new_file_name = "../Marked_Resume.md"
-    with open(new_file_name, "w") as f:
+    if res_or_cov == "Resume":
+        new_markdown_file_path = "./Marked_Resume.md"
+        pdf_save_path = "./Marked_Resume.pdf"
+    else:
+        new_markdown_file_path = "./Marked_Cover_Letter.md"
+        pdf_save_path = "./Marked_Cover_Letter.pdf"
+
+    with open(new_markdown_file_path, "w") as f:
         f.write(marked_resume)
+
+
+    #Convert to markdown file to PDF
+    Utility.convert_markdown_to_pdf(new_markdown_file_path, pdf_save_path)
 
 
 # main()
 
-'''
-"My name is Kush Patel. I am a computer science major studying at Bridgewater State University (BSU),"
-        " I am driven by a desire to innovate and problem solve. I am graduating from the BSU on May, 2025. "
-        "Some important courses I have completed at BSU are Web Application Development, Computer Networks, "
-        "Software Engineering, Cloud Computing, Introduction Database systems, Introduction to A.I., and "
-        "Unix/Linux System Admin.I was awarded Dr. Linda Wilkens and Dr. Glenn Pavlicek Scholarship at BSU in "
-        "recognition of my academic achievements such as a 4.0 major GPA. I am from East Greenwich, Road Island "
-        "but I currently live in Fairhaven, Massachusetts. Some programing languages that I am proficient at are"
-        " Python, Java, Swift, and JavaScript. I also MySQL from my database system course. Currently, I am "
-        "developing a bank statement processing application that efficiently converts bank statements into Excel"
-        " spreadsheets. With a positive attitude and a relentless motivation to learn, I'm eager to take on new "
-        "challenges and expand my expertise. Additionally, along with my current project, I am also doing a "
-        "research internship at Bridgewater State University in which I am developing a program that can "
-        "recognize a table in an image and convert it to an excel table. Some tools that I know are Git, "
-        "JetBrain IDEs, Xcode, and Vscode. My hobbies are playing basketball, cricket, and programing."
-'''
