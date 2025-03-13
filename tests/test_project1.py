@@ -208,6 +208,7 @@ class SaveProfileTestCases(unittest.TestCase):
 
 
 class TestLLMRequest(unittest.TestCase):
+
     def test_llm_api_request(self):
         user_info = "I am a computer science student at Bridgewater University. I also work for google."
         job_des = "We need a software developer who has worked for google before."
@@ -236,15 +237,14 @@ class TestAIPrompt(unittest.TestCase):
         self.conn = sqlite3.connect(self.db_path)
         self.cursor = self.conn.cursor()
 
-
     def close_everything(self):
         self.conn.close()
         if os.path.exists(self.db_path):
             os.remove(self.db_path)
 
-
     # This test ensures that get_profile_by_id() function retrieves data from database accurately.
     def test_get_profile_by_id(self):
+
         try:
             # The Function being tested
             profile = get_profile_by_id(self.db_path, 1)
@@ -264,8 +264,8 @@ class TestAIPrompt(unittest.TestCase):
         finally:
             self.close_everything()
 
-
     def test_get_projects_by_id(self):
+
         try:
             # The Function being tested
             projects = get_projects_by_id(self.db_path, 1)
@@ -292,7 +292,6 @@ class TestAIPrompt(unittest.TestCase):
         finally:
             self.close_everything()
 
-
     def test_get_classes_by_id(self):
         try:
             # The Function being tested
@@ -318,7 +317,6 @@ class TestAIPrompt(unittest.TestCase):
             self.assertEqual(classes, "","Classes should be empty after deleting all entries")
         finally:
             self.close_everything()
-
 
     # This function takes user_profile, projects, and classes data and puts it all in one string.
     # Testing this function will ensure that user_info is being built properly.
@@ -356,7 +354,6 @@ class TestAIPrompt(unittest.TestCase):
             self.assertIn("Projects: \n", user_info_empty_projects, "Empty projects should still be included")
         finally:
             self.close_everything()
-
 
     # Now make sure that user_info and job description are present in the prompt that is being submitted to AI
     def test_prompt_submitted_to_AI(self):

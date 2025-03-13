@@ -10,6 +10,7 @@ app = Flask(__name__)
 project_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 db_path = os.path.join(project_dir, 'Jobs_Database.db')
 
+
 @app.route('/')
 def index():
     return render_template("index.html")
