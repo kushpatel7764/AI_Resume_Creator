@@ -25,6 +25,7 @@ def get_random_json_object():
         random_job = random.choice(random_job_section)
     return random_job
 
+
 def create_AI_prompt(personal_info, job_description, res_or_cov):
     AI_Prompt = (
         f"Remember my Personal Information: {personal_info}\nRemember the Job description: "
@@ -61,6 +62,7 @@ def ask_gemini(user_info, job_des, res_or_cov):
     response = requests.post(url, headers=headers, json=data)
     return response
 
+
 def save_response(response, save_res_name, save_cov_name, res_or_cov):
     response_json = response.json()
 
@@ -78,10 +80,5 @@ def save_response(response, save_res_name, save_cov_name, res_or_cov):
     with open(new_markdown_file_path, "w") as f:
         f.write(marked_resume)
 
-
-    #Convert to markdown file to PDF
+    # Convert to markdown file to PDF
     Utility.convert_markdown_to_pdf(new_markdown_file_path, pdf_save_path)
-
-
-# main()
-
