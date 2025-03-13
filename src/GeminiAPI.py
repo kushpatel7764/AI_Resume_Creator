@@ -1,7 +1,7 @@
 import random
 import json
 import requests
-from .api_secrets import gemini_api_key
+from api_secrets import gemini_api_key
 import src.Utility as Utility
 
 # Name: Kush Patel
