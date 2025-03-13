@@ -307,14 +307,14 @@ class TestAIPrompt(unittest.TestCase):
 
             # Testing with a non-existent ID
             classes = get_classes_by_id("../test_job.db", 23)
-            self.assertEqual(classes, "","Classes should be empty for a non-existent ID")
+            self.assertEqual(classes, "", "Classes should be empty for a non-existent ID")
 
             # Testing when database is empty
             self.cursor.execute("DELETE FROM Classes")
             self.conn.commit()
 
             classes = get_classes_by_id("../test_job.db", 1)
-            self.assertEqual(classes, "","Classes should be empty after deleting all entries")
+            self.assertEqual(classes, "", "Classes should be empty after deleting all entries")
         finally:
             self.close_everything()
 
