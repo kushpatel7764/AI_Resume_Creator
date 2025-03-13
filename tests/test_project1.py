@@ -161,7 +161,7 @@ class SaveProfileTestCases(unittest.TestCase):
 
     def test_save_profile(self):
         user_profile = [
-            'Profile1', # profile_name
+            'Profile1',  # profile_name
             'Shiv Patel',  # user_name
             'shivpatelrp123@gmail.com',  # email
             '5089717530',  # phone
@@ -206,6 +206,7 @@ class SaveProfileTestCases(unittest.TestCase):
         conn.close()
         os.remove("../test_job.db")
 
+
 class TestLLMRequest(unittest.TestCase):
     def test_llm_api_request(self):
         user_info = "I am a computer science student at Bridgewater University. I also work for google."
@@ -214,6 +215,7 @@ class TestLLMRequest(unittest.TestCase):
 
         assert response.status_code == 200, f"Expected 200, but got {response.status_code}"
         print("Test passed: Received 200 OK response")
+
 
 class TestAIPrompt(unittest.TestCase):
     """
@@ -234,10 +236,12 @@ class TestAIPrompt(unittest.TestCase):
         self.conn = sqlite3.connect(self.db_path)
         self.cursor = self.conn.cursor()
 
+
     def close_everything(self):
         self.conn.close()
         if os.path.exists(self.db_path):
             os.remove(self.db_path)
+
 
     # This test ensures that get_profile_by_id() function retrieves data from database accurately.
     def test_get_profile_by_id(self):
@@ -260,6 +264,7 @@ class TestAIPrompt(unittest.TestCase):
         finally:
             self.close_everything()
 
+
     def test_get_projects_by_id(self):
         try:
             # The Function being tested
@@ -275,17 +280,18 @@ class TestAIPrompt(unittest.TestCase):
 
             # Testing with a non-existent ID
             projects = get_projects_by_id("../test_job.db", 23)
-            self.assertEqual(projects, "","projects should be empty for a non-existent ID")
+            self.assertEqual(projects, "", "projects should be empty for a non-existent ID")
 
             # Testing when database is empty
             self.cursor.execute("DELETE FROM projects")
             self.conn.commit()
 
             projects = get_projects_by_id("../test_job.db", 1)
-            self.assertEqual(projects, "","projects should be empty after deleting all entries")
+            self.assertEqual(projects, "", "projects should be empty after deleting all entries")
 
         finally:
             self.close_everything()
+
 
     def test_get_classes_by_id(self):
         try:
@@ -312,6 +318,7 @@ class TestAIPrompt(unittest.TestCase):
             self.assertEqual(classes, "","Classes should be empty after deleting all entries")
         finally:
             self.close_everything()
+
 
     # This function takes user_profile, projects, and classes data and puts it all in one string.
     # Testing this function will ensure that user_info is being built properly.
@@ -349,6 +356,7 @@ class TestAIPrompt(unittest.TestCase):
             self.assertIn("Projects: \n", user_info_empty_projects, "Empty projects should still be included")
         finally:
             self.close_everything()
+
 
     # Now make sure that user_info and job description are present in the prompt that is being submitted to AI
     def test_prompt_submitted_to_AI(self):

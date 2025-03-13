@@ -24,8 +24,8 @@ def array_to_string(array):
 def user_profile_to_paragraph(profile, projects, classes):
     return_str = f"""My name is {profile.name}. Some important courses I have completed at BSU are {classes}.Additionally'
                 , along with my courses, I have also  done projects such as {projects}. Some ways to contact me are
-                through my email: {profile.email}, phone: {profile.phone}, github: {profile.github}, linkedin: 
-                {profile.linkedin}. Some other important information about me is {profile.other}"""
+                through my email: {profile.email}, phone: {profile.phone}, github: {profile.github}, linkedin:
+                 {profile.linkedin}. Some other important information about me is {profile.other}"""
     return return_str
 
 

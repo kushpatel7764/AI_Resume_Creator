@@ -4,9 +4,6 @@ import src.Database
 import src.Utility as Utility
 import src.GeminiAPI as GeminiAPI
 from flask import Flask, render_template, request, jsonify, send_file
-
-from src.Database import initialize_user_tables
-
 app = Flask(__name__)
 
 # Get database path
@@ -34,10 +31,12 @@ def job_detail(job_id):
 def profile_page():
     return render_template("user_profile.html")
 
+
 @app.route('/resume')
 def resume():
     profiles = src.Database_Queries.get_profiles(db_path)
     return render_template("create_resume.html", profiles=profiles, job=None)
+
 
 @app.route('/resume_with_job_id/<string:job_id>')
 def resume_with_job_id(job_id):
@@ -46,6 +45,7 @@ def resume_with_job_id(job_id):
     if job_id:
         job = src.Database_Queries.get_job_by_id(db_path, job_id)
     return render_template("create_resume.html", profiles=profiles, job=job)
+
 
 @app.route('/create_resume_request/<string:job_id>/<string:profile_id>', methods=['POST', 'GET'])
 def create_resume_request(job_id, profile_id):
@@ -64,6 +64,7 @@ def create_resume_request(job_id, profile_id):
     profiles = src.Database_Queries.get_profiles(db_path)
 
     return render_template("create_resume.html", profiles=profiles, job=job, _enable_download=True)
+
 
 @app.route('/create_cover_letter_request/<string:job_id>/<string:profile_id>', methods=['POST', 'GET'])
 def create_cover_letter_request(job_id, profile_id):
@@ -89,10 +90,12 @@ def download_resume():
     pdf_path = "./Marked_Resume.pdf"  # Path to the generated PDF file
     return send_file(pdf_path, as_attachment=True)
 
+
 @app.route('/download_cover_letter')
 def download_cover_letter():
     pdf_path = "./Marked_Cover_Letter.pdf"  # Path to the generated PDF file
     return send_file(pdf_path, as_attachment=True)
+
 
 @app.route('/save_profile', methods=['POST'])
 def save_profile():
