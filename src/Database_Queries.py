@@ -23,6 +23,7 @@ def get_jobs(db):
 
     return job_list
 
+
 def get_profiles(db):
     conn = sqlite3.connect(db)
     cursor = conn.cursor()
@@ -69,7 +70,8 @@ def get_profile_by_id(db, profile_id):
     # AI used here
     conn = sqlite3.connect(db)
     cursor = conn.cursor()
-    cursor.execute("SELECT id, profile_name, user_name, email, phone, github, linkedin, other FROM user_profiles WHERE id = ?", (profile_id,))
+    cursor.execute("SELECT id, profile_name, user_name, email, phone, github, linkedin, other FROM user_profiles WHERE"
+                   " id = ?", (profile_id,))
     profile = cursor.fetchone()
     conn.close()
 
@@ -86,6 +88,7 @@ def get_profile_by_id(db, profile_id):
         }
     return None
 
+
 # Function to fetch projects by userID
 def get_projects_by_id(db, profile_id):
     # AI used here
@@ -98,6 +101,7 @@ def get_projects_by_id(db, profile_id):
     project_string = src.Utility.array_to_string(projects)
     return project_string
 
+
 # Function to fetch classes by userID
 def get_classes_by_id(db, profile_id):
     # AI used here
@@ -109,4 +113,3 @@ def get_classes_by_id(db, profile_id):
 
     class_string = src.Utility.array_to_string(classes)
     return class_string
-
