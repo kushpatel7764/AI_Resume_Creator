@@ -1,10 +1,10 @@
 # KushPatel_Project1
-This project uses Gemini A.I. model to generate a resume in Markdown format. To create the resume, the A.I. model is  
+This project uses Gemini A.I. model to generate a resume or cover letter in Markdown format. To create the resume, the A.I. model must be  
 provided with a job description and a personal description. A WebUI has been added to this project for easier user 
 interactions. To view the website, navigate to the src directory of this project and run python app.py. While the script
-is running, open your browser and go to http://127.0.0.1:5000. The website has two tabs: Available Jobs and Profile. In 
+is running, open your browser and go to http://127.0.0.1:5000. The website has three tabs: Available Jobs, Profile, and Resume. In 
 the Available Jobs tab, users can browse job listings. In the Profile tab, users to save information that can help their
-employability. 
+employability. In the Resume tab, users can create a resume or cover letter for the selected job and profile with Google Gemini. 
 
 **Instructions to Run the Program:**
 1. Ensure libraries from `requirements.txt` are installed.
@@ -15,8 +15,9 @@ employability.
 6. The output will be saved as `Marked_Resume.md`.
 7. To view job listings, run the following command inside the src directory: `python app.py`
 8. One the script is running, open your browser and go to: http://127.0.0.1:5000.
-9. In the Available Jobs tab, user can browse job listings.
+9. In the Available Jobs tab, user can browse job listings and select a job they would like to apply for.
 10. In the Profile tab, users can save their information.
+11. In the Resume tab, users can create a resume or cover letter with Google Gemini.
 
 **Test Functions**
 * test_get_all_json_objects: Tests whether job data is correctly read from a JSON file.
@@ -28,6 +29,15 @@ input received from request.form is accurate, it can then be passed to the inser
 function will store all user input in the same SQLite database as the job data.
 * test_save_profile: Tests that user input is correctly inserted into the SQLite database by insert_user_profile_data 
 function.
+* test_llm_api_request: Ensures that the ask_gemini API request is functioning correctly by checks whether the API response
+returns a status code 200 (OK).
+* test_get_profile_by_id: Ensures that get_profile_by_id() retrieves the correct  user profile from the database when given
+a valid id that is in range.
+* test_get_projects_by_id: Ensures that get_projects_by_id() retrieves the correct projects when given a valid in range Id.
+* test_get_classes_by_id: Ensures that get_classes_by_id() retrieves the correct classes data.
+* test_user_profile_to_keywords: Ensures that user_profile_to_keywords() correctly formats user data into a single string.
+* test_prompt_submitted_to_AI:  Ensures that the automatically created AI prompt contains user_info and job_description 
+before being sent to Gemini.
 
 
 **Why Google Gemini AI?**

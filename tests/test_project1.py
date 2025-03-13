@@ -359,12 +359,21 @@ class TestAIPrompt(unittest.TestCase):
         response = ask_gemini(user_info, job_des, "resume")
         prompt_given_json = json.loads(response.request.body)
         prompt_given = prompt_given_json["contents"][0]["parts"][0]["text"]
+        # Split prompt_given into three section first one is user_info, second is job_description, and last is prompt to
+        # ai. This can be done with a split on newline char because I have built my prompt so that each newline char is
+        # new section.
+        prompt_given_three_sections = prompt_given.split("\n")
+        personal_info_identifier = "Remember my Personal Information: "
+        Job_description_identifier = "Remember the Job description: "
 
+        user_info = personal_info_identifier + user_info
+        job_des = Job_description_identifier + job_des
 
+        self.assertEqual(prompt_given_three_sections[0], user_info, "prompt_given should contain user_info")
+        self.assertEqual(prompt_given_three_sections[1], job_des, "prompt_given should contain job_des")
 
-        self.assertIn(prompt_given, user_info, "prompt_given should contain user_info")
-        self.assertIn(prompt_given, job_des, "prompt_given should contain job_des")
-
+        # Make sure there are three sections
+        self.assertEqual(len(prompt_given_three_sections), 3, "Prompt should only contain three sections")
 
 
 if __name__ == "__main__":
