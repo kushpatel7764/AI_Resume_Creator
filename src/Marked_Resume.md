@@ -1,45 +1,52 @@
-# KUSH PATEL
+# Kush Patel
 
-[kushpatelrp1234@gmail.com](mailto:kushpatelrp1234@gmail.com) | 508-961-8694 | [LinkedIn Profile URL (if applicable)]
-
+**(123) 456-7890 | kushrp1234@gmail.com | [https://github.com](https://github.com) | [https://linkedin.com](https://linkedin.com)**
 
 ## Summary
 
-Highly detail-oriented and passionate Information Security professional with a strong foundation in [mention relevant field from your education/experience, e.g., mathematics, data analysis, etc.] seeking an Information Security Analyst or Senior Information Security Analyst position at SERS.  Proven ability to apply analytical and problem-solving skills to complex challenges, coupled with excellent communication skills to effectively convey technical information to both technical and non-technical audiences.  Eager to leverage experience in [mention relevant experience areas like data loss prevention, fraud detection, etc.] to contribute to a robust and secure environment.
-
+Highly motivated and detail-oriented Computer Science major at Bridgewater State University (BSU) graduating May 2025, seeking an Information Security Analyst or Sr. Information Security Analyst position. Proven ability to innovate and problem-solve, with experience in Python, Java, Swift, JavaScript, and MySQL.  Possessing a strong foundation in software development and a desire to leverage skills in data security, fraud detection, and insider threat mitigation.  Awarded Dr. Linda Wilkens and Dr. Glenn Pavlicek Scholarship at BSU for academic excellence (4.0 GPA). Holds Google Software Development and I.T. Support Certificates.
 
 ## Skills
 
-* **Information Security:** Data Loss Prevention (DLP), Fraud Detection, Insider Threat Mitigation, Data Classification, Data Encryption, User Behavior Analytics, Privilege Access Management.
-* **Security Technologies:** SIEM (mention specific tools if applicable), Endpoint Detection and Response (EDR) (mention specific tools if applicable), Data Protection Technologies (mention specific tools if applicable).
-* **Analytical & Problem-Solving:**  Exceptional analytical and problem-solving skills with meticulous attention to detail. Proven ability to think critically under pressure.
-* **Regulatory Compliance:** Knowledge of data protection regulations and industry standards (mention specific regulations if applicable).
-* **Communication:** Excellent written and verbal communication skills, adept at explaining complex technical concepts to non-technical audiences.
-* **Certifications:** [List any relevant certifications held. If none, state "Pursuing relevant certifications such as CISSP, CISM, GIAC, etc." ]
-* **Machine Learning/Anomaly Detection:** [Mention experience if applicable]
+* **Programming Languages:** Python, Java, Swift, JavaScript, MySQL
+* **Tools & Technologies:** Git, JetBrains IDEs, Xcode, VS Code, SIEM (familiar), Data Classification, Data Protection, Endpoint Detection and Response (familiar)
+* **Information Security:** Data Loss Prevention (DLP), Fraud Detection, Insider Threat Mitigation, Anomaly Detection, User Behavior Analytics, Privilege Access Management, Data Encryption, Content Inspection, Data Classification (experience with implementing via programming)
+* **Data Analysis:**  Strong analytical and problem-solving skills, attention to detail, critical thinking
+* **Regulatory Knowledge:**  Familiar with data protection regulations (seeking to expand this knowledge)
+* **Operating Systems:** Unix/Linux (familiarity from coursework)
+* **Communication:** Excellent written and verbal communication skills; ability to explain complex technical information clearly
+* **Methodologies:** Agile software development principles (experience in collaborative projects)
 
 
 ## Education
 
-* [Your Degree] in [Your Major], [Your University/Institution] – [Year of Graduation]
+**Bridgewater State University (BSU)**, Bridgewater, MA
+* Bachelor of Science in Computer Science, May 2025
+* GPA: 4.0
+* Relevant Coursework: Web Application Development, Computer Networks, Software Engineering, Cloud Computing, Introduction to Database Systems, Introduction to A.I., Unix/Linux System Administration
+
+**Certifications:**
+
+* Google Software Development Certificate
+* I.T. Support Certificate
 
 
-## Experience
+## Projects
 
-* **[Previous Role Title], [Previous Company] – [Dates of Employment]**
-    * [Describe responsibilities and accomplishments using keywords from the job description. Quantify achievements whenever possible.  Example: "Reduced data breaches by 15% through implementation of new DLP measures."]
-* **[Previous Role Title], [Previous Company] – [Dates of Employment]**
-    * [Describe responsibilities and accomplishments using keywords from the job description. Quantify achievements whenever possible.]
+* **Bank Statement Processing Application:** Developed an application to efficiently convert bank statements into Excel spreadsheets. (Python, potentially relevant to data processing/analysis skills required for security roles).
+* **Image-to-Excel Table Conversion:** Research internship at BSU focusing on developing a program to recognize and convert tables from images to Excel tables. (Python, image processing, potentially relevant to DLP and data extraction).
 
 
-## Projects (Optional)
+## Awards and Recognition
 
-* [Describe any relevant personal projects that demonstrate your skills. This section is particularly useful if you lack extensive professional experience.]
-
-
-## Capstone Project (Optional)
-
-* [Briefly describe your capstone project, highlighting relevant skills and technologies used.  Focus on aspects that align with the job description.]
+* Dr. Linda Wilkens and Dr. Glenn Pavlicek Scholarship, Bridgewater State University
 
 
-**Note:**  This resume is a template.  You need to fill in the bracketed information with your own details and tailor it further to best reflect your skills and experience as they relate to the specific requirements of the SERS Information Security Analyst position.  Consider adding quantifiable results to your experience descriptions to showcase your impact.  Remember to replace the placeholder LinkedIn URL with your actual profile link if you have one.
+## Location
+
+Flexible - Willing to relocate to Columbus, OH for the right opportunity.
+
+
+## Note:
+
+While my current experience doesn't directly match all aspects of the job description, my strong foundation in computer science, coupled with my eagerness to learn and apply my skills in the information security field, makes me a suitable candidate for further consideration.  I am actively seeking opportunities to expand my knowledge in areas such as specific DLP technologies and insider threat mitigation best practices.  I am also keen on pursuing relevant security certifications in the future.

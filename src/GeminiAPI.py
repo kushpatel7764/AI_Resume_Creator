@@ -70,7 +70,7 @@ def save_response(response, save_res_name, save_cov_name, res_or_cov):
     marked_resume = response_json["candidates"][0]["content"]["parts"][0]["text"]
 
     # Save the generated resume to a markdown file
-    if res_or_cov == "Resume":
+    if res_or_cov == "resume":
         new_markdown_file_path = f"./{save_res_name}.md"
         pdf_save_path = f"./{save_res_name}.pdf"
     else:
